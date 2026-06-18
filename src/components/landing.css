@@ -71,24 +71,25 @@ body {
   mix-blend-mode: screen;
 
   /*
-    Fog is a camera/weather layer, not part of the forest image.
-    It stays independent while the forest scrolls behind it.
-    It fades out before the dark lower forest region.
+    Camera/weather fog layer.
+    Independent from scroll.
+    Strongest in upper/mid frame.
+    Fades out before the dark forest bottom.
   */
   mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 54%,
-    rgba(0, 0, 0, 0.72) 68%,
-    rgba(0, 0, 0, 0.28) 82%,
+    black 58%,
+    rgba(0, 0, 0, 0.74) 70%,
+    rgba(0, 0, 0, 0.34) 84%,
     transparent 100%
   );
   -webkit-mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 54%,
-    rgba(0, 0, 0, 0.72) 68%,
-    rgba(0, 0, 0, 0.28) 82%,
+    black 58%,
+    rgba(0, 0, 0, 0.74) 70%,
+    rgba(0, 0, 0, 0.34) 84%,
     transparent 100%
   );
 }
@@ -100,30 +101,30 @@ body {
 }
 
 /*
-  Main fog sheet.
-  Broad, visible, right-to-left.
+  Primary visible fog body.
+  Stronger and less blurred than before.
 */
 .fog-plane-a {
-  top: -28vh;
-  left: -62vw;
-  width: 275vw;
-  height: 105vh;
-  opacity: 0.62;
-  filter: blur(7px);
+  top: -30vh;
+  left: -64vw;
+  width: 282vw;
+  height: 108vh;
+  opacity: 0.76;
+  filter: blur(4px);
   transform: rotate(-2.5deg) scale(1.12);
 }
 
 /*
-  Secondary fog sheet.
-  Softer and slightly lower, also right-to-left.
+  Secondary broader fog body.
+  Softer, slightly lower, same right-to-left direction.
 */
 .fog-plane-b {
-  top: -4vh;
-  left: -78vw;
-  width: 292vw;
-  height: 102vh;
-  opacity: 0.46;
-  filter: blur(12px);
+  top: -8vh;
+  left: -82vw;
+  width: 305vw;
+  height: 106vh;
+  opacity: 0.56;
+  filter: blur(8px);
   transform: rotate(1.5deg) scale(1.2);
 }
 
@@ -141,17 +142,17 @@ body {
   width: 142vw;
   height: 100%;
   object-fit: contain;
-  opacity: 0.92;
+  opacity: 0.98;
 }
 
 .fog-track-a {
   animation-name: fog-flow-main;
-  animation-duration: 54s;
+  animation-duration: 36s;
 }
 
 .fog-track-b {
   animation-name: fog-flow-secondary;
-  animation-duration: 76s;
+  animation-duration: 50s;
 }
 
 @keyframes fog-flow-main {
@@ -279,20 +280,22 @@ body {
   }
 
   .fog-plane-a {
-    top: -24vh;
+    top: -26vh;
     left: -110vw;
-    width: 390vw;
-    height: 100vh;
-    opacity: 0.56;
+    width: 395vw;
+    height: 102vh;
+    opacity: 0.68;
+    filter: blur(4px);
     transform: rotate(-2.5deg) scale(1.32);
   }
 
   .fog-plane-b {
-    top: -2vh;
-    left: -130vw;
-    width: 420vw;
-    height: 100vh;
-    opacity: 0.4;
+    top: -4vh;
+    left: -132vw;
+    width: 430vw;
+    height: 102vh;
+    opacity: 0.48;
+    filter: blur(8px);
     transform: rotate(1.5deg) scale(1.42);
   }
 
