@@ -54,9 +54,9 @@ body {
 }
 
 /*
-  Fog now belongs to the same tall vertical world as the forest.
-  Vertical movement comes from .forest-world.
-  Horizontal movement remains independent CSS animation.
+  Fog belongs to the scrolling forest world.
+  It covers upper + mid + lower-mid forest,
+  but fades before the darkest bottom merge region.
 */
 .fog-system {
   position: absolute;
@@ -69,18 +69,18 @@ body {
   mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 60%,
-    rgba(0, 0, 0, 0.78) 72%,
-    rgba(0, 0, 0, 0.36) 86%,
-    transparent 100%
+    black 68%,
+    rgba(0, 0, 0, 0.82) 78%,
+    rgba(0, 0, 0, 0.48) 88%,
+    transparent 97%
   );
   -webkit-mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 60%,
-    rgba(0, 0, 0, 0.78) 72%,
-    rgba(0, 0, 0, 0.36) 86%,
-    transparent 100%
+    black 68%,
+    rgba(0, 0, 0, 0.82) 78%,
+    rgba(0, 0, 0, 0.48) 88%,
+    transparent 97%
   );
 }
 
@@ -90,26 +90,26 @@ body {
   will-change: transform, opacity;
 }
 
-/* Primary visible fog body */
+/* Primary fog body: stronger and taller */
 .fog-plane-a {
-  top: -20vh;
-  left: -70vw;
-  width: 305vw;
-  height: 128vh;
-  opacity: 0.86;
-  filter: blur(3px);
-  transform: rotate(-2.5deg) scale(1.14);
+  top: -24vh;
+  left: -72vw;
+  width: 315vw;
+  height: 148vh;
+  opacity: 0.9;
+  filter: blur(2.5px);
+  transform: rotate(-2.5deg) scale(1.16);
 }
 
-/* Secondary broader fog body */
+/* Secondary fog body: extends into lower-mid forest */
 .fog-plane-b {
-  top: 22vh;
-  left: -92vw;
-  width: 335vw;
-  height: 122vh;
-  opacity: 0.66;
-  filter: blur(6px);
-  transform: rotate(1.5deg) scale(1.22);
+  top: 18vh;
+  left: -96vw;
+  width: 350vw;
+  height: 152vh;
+  opacity: 0.72;
+  filter: blur(5px);
+  transform: rotate(1.5deg) scale(1.24);
 }
 
 .fog-track {
@@ -123,7 +123,7 @@ body {
 
 .fog-track img {
   flex: 0 0 auto;
-  width: 150vw;
+  width: 154vw;
   height: 100%;
   object-fit: contain;
   opacity: 1;
@@ -131,12 +131,12 @@ body {
 
 .fog-track-a {
   animation-name: fog-flow-main;
-  animation-duration: 28s;
+  animation-duration: 26s;
 }
 
 .fog-track-b {
   animation-name: fog-flow-secondary;
-  animation-duration: 40s;
+  animation-duration: 37s;
 }
 
 @keyframes fog-flow-main {
@@ -277,26 +277,26 @@ body {
   }
 
   .fog-plane-a {
-    top: -16vh;
-    left: -120vw;
-    width: 430vw;
-    height: 122vh;
-    opacity: 0.78;
-    filter: blur(3px);
-    transform: rotate(-2.5deg) scale(1.34);
+    top: -22vh;
+    left: -125vw;
+    width: 445vw;
+    height: 145vh;
+    opacity: 0.82;
+    filter: blur(2.5px);
+    transform: rotate(-2.5deg) scale(1.36);
   }
 
   .fog-plane-b {
-    top: 20vh;
-    left: -145vw;
-    width: 470vw;
-    height: 118vh;
-    opacity: 0.58;
-    filter: blur(6px);
-    transform: rotate(1.5deg) scale(1.42);
+    top: 16vh;
+    left: -150vw;
+    width: 490vw;
+    height: 148vh;
+    opacity: 0.64;
+    filter: blur(5px);
+    transform: rotate(1.5deg) scale(1.44);
   }
 
   .fog-track img {
-    width: 200vw;
+    width: 210vw;
   }
 }
