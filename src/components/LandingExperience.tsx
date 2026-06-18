@@ -15,6 +15,8 @@ export default function LandingExperience() {
   const toneRef = useRef<HTMLDivElement | null>(null);
   const darkVeilRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLDivElement | null>(null);
+  const archiveBgRef = useRef<HTMLDivElement | null>(null);
+  const archiveImageRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!rootRef.current || !worldRef.current || !forestRef.current) return;
@@ -67,6 +69,21 @@ export default function LandingExperience() {
         y: 0,
       });
 
+      gsap.set(worldRef.current, {
+        opacity: 1,
+      });
+
+      gsap.set(archiveBgRef.current, {
+        opacity: 0,
+        scale: 1.04,
+      });
+
+      gsap.set(archiveImageRef.current, {
+        opacity: 0,
+        y: 48,
+        scale: 0.94,
+      });
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: rootRef.current,
@@ -82,6 +99,7 @@ export default function LandingExperience() {
         {
           y: getTravel,
           ease: "none",
+          duration: 1,
         },
         0,
       )
@@ -90,16 +108,18 @@ export default function LandingExperience() {
           {
             opacity: 0.04,
             ease: "none",
+            duration: 0.75,
           },
           0,
         )
         .to(
           darkVeilRef.current,
           {
-            opacity: 0.26,
+            opacity: 0.34,
             ease: "none",
+            duration: 0.7,
           },
-          0.22,
+          0.38,
         )
         .to(
           titleRef.current,
@@ -107,8 +127,48 @@ export default function LandingExperience() {
             opacity: 0,
             y: -22,
             ease: "power2.out",
+            duration: 0.32,
           },
           0.12,
+        )
+        .to(
+          archiveBgRef.current,
+          {
+            opacity: 1,
+            scale: 1,
+            ease: "power1.inOut",
+            duration: 0.68,
+          },
+          0.82,
+        )
+        .to(
+          worldRef.current,
+          {
+            opacity: 0,
+            ease: "power1.inOut",
+            duration: 0.56,
+          },
+          0.98,
+        )
+        .to(
+          darkVeilRef.current,
+          {
+            opacity: 0.18,
+            ease: "none",
+            duration: 0.42,
+          },
+          1.18,
+        )
+        .to(
+          archiveImageRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            ease: "power2.out",
+            duration: 0.56,
+          },
+          1.32,
         );
     }, rootRef);
 
@@ -183,6 +243,17 @@ export default function LandingExperience() {
               </div>
             </div>
           </div>
+        </div>
+
+        <div ref={archiveBgRef} className="archive-transition-bg" />
+
+        <div ref={archiveImageRef} className="archive-scroll-image">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/hiraishin-architecture-painting.png"
+            alt=""
+            draggable={false}
+          />
         </div>
 
         <div ref={toneRef} className="tone-wash" />

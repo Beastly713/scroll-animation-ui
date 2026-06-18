@@ -9,7 +9,7 @@ body {
 
 .landing-scroll {
   position: relative;
-  height: 260vh;
+  height: 430vh;
   background: #050501;
 }
 
@@ -26,6 +26,7 @@ body {
 .forest-window {
   position: absolute;
   inset: 0;
+  z-index: 1;
   overflow: hidden;
   background: #050501;
 }
@@ -51,6 +52,59 @@ body {
   user-select: none;
   pointer-events: none;
   filter: brightness(0.98) contrast(0.9) saturate(0.76);
+}
+
+.archive-transition-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: url("/images/archive-transition-bg.png");
+  background-size: cover;
+  background-position: center center;
+  filter: brightness(0.92) contrast(1.04) saturate(0.88);
+  transform-origin: center center;
+  will-change: opacity, transform;
+}
+
+.archive-transition-bg::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(1, 4, 3, 0.32),
+      rgba(0, 0, 0, 0) 26%,
+      rgba(0, 0, 0, 0.08) 72%,
+      rgba(2, 7, 5, 0.32)
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(120, 92, 52, 0.1),
+      rgba(0, 0, 0, 0.42) 76%
+    );
+}
+
+.archive-scroll-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 6;
+  width: min(86vw, 1540px);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  will-change: opacity, transform;
+}
+
+.archive-scroll-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  filter: drop-shadow(0 42px 72px rgba(0, 0, 0, 0.58));
 }
 
 /*
@@ -251,6 +305,7 @@ body {
 .tone-wash {
   position: absolute;
   inset: 0;
+  z-index: 3;
   pointer-events: none;
   background:
     radial-gradient(circle at 5% 0%, rgba(235, 232, 205, 0.34), transparent 22%),
@@ -267,6 +322,7 @@ body {
 .dark-veil {
   position: absolute;
   inset: 0;
+  z-index: 5;
   pointer-events: none;
   background:
     radial-gradient(circle at 50% 36%, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.18) 76%),
@@ -363,6 +419,10 @@ body {
 
   .forest-world {
     height: 185vh;
+  }
+
+  .archive-scroll-image {
+    width: 92vw;
   }
 
   .fog-plane-a {
