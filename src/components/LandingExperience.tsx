@@ -17,7 +17,8 @@ export default function LandingExperience() {
   const titleRef = useRef<HTMLDivElement | null>(null);
   const archiveBgRef = useRef<HTMLDivElement | null>(null);
   const archiveImageRef = useRef<HTMLDivElement | null>(null);
-  const companyBgRef = useRef<HTMLDivElement | null>(null);
+  const companyWorldRef = useRef<HTMLDivElement | null>(null);
+  const companyImageRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
     if (!rootRef.current || !worldRef.current || !forestRef.current) return;
@@ -45,6 +46,14 @@ export default function LandingExperience() {
 
         const rect = world.getBoundingClientRect();
         return -Math.max(rect.height - window.innerHeight, window.innerHeight * 0.85);
+      };
+
+      const getCompanyTravel = () => {
+        const world = companyWorldRef.current;
+        if (!world) return -window.innerHeight * 0.8;
+
+        const rect = world.getBoundingClientRect();
+        return -Math.max(rect.height - window.innerHeight, window.innerHeight * 0.75);
       };
 
       gsap.set(worldRef.current, {
@@ -79,9 +88,11 @@ export default function LandingExperience() {
         scale: 0.94,
       });
 
-      gsap.set(companyBgRef.current, {
+      gsap.set(companyWorldRef.current, {
         opacity: 0,
-        scale: 1.05,
+        y: 0,
+        scale: 1.02,
+        transformOrigin: "50% 0%",
       });
 
       const tl = gsap.timeline({
@@ -180,14 +191,14 @@ export default function LandingExperience() {
           3.9,
         )
         .to(
-          companyBgRef.current,
+          companyWorldRef.current,
           {
             opacity: 1,
             scale: 1,
             ease: "power1.inOut",
-            duration: 1.05,
+            duration: 0.95,
           },
-          4.65,
+          4.6,
         )
         .to(
           archiveBgRef.current,
@@ -196,37 +207,47 @@ export default function LandingExperience() {
             ease: "power1.inOut",
             duration: 0.95,
           },
-          4.75,
+          4.72,
         )
         .to(
           archiveImageRef.current,
           {
             opacity: 0,
-            y: -34,
+            y: -36,
             scale: 0.96,
             ease: "power2.inOut",
-            duration: 0.8,
+            duration: 0.78,
           },
-          4.82,
+          4.78,
         )
         .to(
           darkVeilRef.current,
           {
-            opacity: 0.08,
+            opacity: 0.07,
             ease: "none",
-            duration: 0.9,
+            duration: 0.85,
           },
-          4.78,
+          4.76,
+        )
+        .to(
+          companyWorldRef.current,
+          {
+            y: getCompanyTravel,
+            ease: "none",
+            duration: 1.65,
+          },
+          5.15,
         );
     }, rootRef);
 
     const refresh = () => ScrollTrigger.refresh();
     window.addEventListener("resize", refresh);
 
-    if (forestRef.current.complete) {
+    if (forestRef.current.complete && companyImageRef.current?.complete) {
       ScrollTrigger.refresh();
     } else {
       forestRef.current.addEventListener("load", refresh, { once: true });
+      companyImageRef.current?.addEventListener("load", refresh, { once: true });
     }
 
     return () => {
@@ -293,7 +314,18 @@ export default function LandingExperience() {
         </div>
 
         <div ref={archiveBgRef} className="archive-transition-bg" />
-        <div ref={companyBgRef} className="company-transition-bg" />
+        <div className="company-window">
+          <div ref={companyWorldRef} className="company-world">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              ref={companyImageRef}
+              className="company-image"
+              src="/images/home_company_img.webp"
+              alt=""
+              draggable={false}
+            />
+          </div>
+        </div>
 
         <div ref={archiveImageRef} className="archive-scroll-image">
           {/* eslint-disable-next-line @next/next/no-img-element */}
