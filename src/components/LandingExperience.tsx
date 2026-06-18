@@ -10,13 +10,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function LandingExperience() {
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const worldRef = useRef<HTMLDivElement | null>(null);
   const forestRef = useRef<HTMLImageElement | null>(null);
   const toneRef = useRef<HTMLDivElement | null>(null);
   const darkVeilRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!rootRef.current || !forestRef.current) return;
+    if (!rootRef.current || !worldRef.current || !forestRef.current) return;
 
     const lenis = new Lenis({
       duration: 1.45,
@@ -36,18 +37,20 @@ export default function LandingExperience() {
 
     const ctx = gsap.context(() => {
       const getTravel = () => {
-        const img = forestRef.current;
-        if (!img) return -window.innerHeight * 0.75;
+        const world = worldRef.current;
+        if (!world) return -window.innerHeight * 0.85;
 
-        const rect = img.getBoundingClientRect();
-        const maxTravel = Math.max(rect.height - window.innerHeight, window.innerHeight * 0.75);
+        const rect = world.getBoundingClientRect();
+        const maxTravel = Math.max(
+          rect.height - window.innerHeight,
+          window.innerHeight * 0.85,
+        );
 
         return -maxTravel;
       };
 
-      gsap.set(forestRef.current, {
+      gsap.set(worldRef.current, {
         y: 0,
-        scale: 1,
         transformOrigin: "50% 0%",
       });
 
@@ -75,7 +78,7 @@ export default function LandingExperience() {
       });
 
       tl.to(
-        forestRef.current,
+        worldRef.current,
         {
           y: getTravel,
           ease: "none",
@@ -132,38 +135,39 @@ export default function LandingExperience() {
     <main ref={rootRef} className="landing-scroll">
       <section className="landing-stage">
         <div className="forest-window">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            ref={forestRef}
-            className="forest-image"
-            src="/images/home_fv_img.webp"
-            alt=""
-            draggable={false}
-          />
+          <div ref={worldRef} className="forest-world">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              ref={forestRef}
+              className="forest-image"
+              src="/images/home_fv_img.webp"
+              alt=""
+              draggable={false}
+            />
+
+            <div className="fog-system" aria-hidden="true">
+              <div className="fog-plane fog-plane-a">
+                <div className="fog-track fog-track-a">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/common_fv_cloud01.webp" alt="" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/common_fv_cloud01.webp" alt="" />
+                </div>
+              </div>
+
+              <div className="fog-plane fog-plane-b">
+                <div className="fog-track fog-track-b">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/common_fv_cloud02.webp" alt="" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/common_fv_cloud02.webp" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div ref={toneRef} className="tone-wash" />
-
-        <div className="fog-system" aria-hidden="true">
-          <div className="fog-plane fog-plane-a">
-            <div className="fog-track fog-track-a">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/common_fv_cloud01.webp" alt="" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/common_fv_cloud01.webp" alt="" />
-            </div>
-          </div>
-
-          <div className="fog-plane fog-plane-b">
-            <div className="fog-track fog-track-b">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/common_fv_cloud02.webp" alt="" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/common_fv_cloud02.webp" alt="" />
-            </div>
-          </div>
-        </div>
-
         <div ref={darkVeilRef} className="dark-veil" />
 
         <header className="landing-chrome">

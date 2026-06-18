@@ -30,66 +30,56 @@ body {
   background: #050501;
 }
 
-.forest-image {
+.forest-world {
   position: absolute;
   top: 0;
-  left: 50%;
+  left: 0;
   width: 100vw;
-  height: auto;
-  min-height: 185vh;
-  transform: translateX(-50%);
+  height: 190vh;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.forest-image {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center top;
   user-select: none;
   pointer-events: none;
   filter: brightness(0.98) contrast(0.9) saturate(0.76);
-  will-change: transform;
 }
 
-.tone-wash {
+/*
+  Fog now belongs to the same tall vertical world as the forest.
+  Vertical movement comes from .forest-world.
+  Horizontal movement remains independent CSS animation.
+*/
+.fog-system {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 5% 0%, rgba(235, 232, 205, 0.34), transparent 22%),
-    linear-gradient(
-      110deg,
-      rgba(178, 190, 176, 0.18),
-      rgba(81, 100, 86, 0.08) 45%,
-      rgba(0, 0, 0, 0)
-    );
-  mix-blend-mode: screen;
-  will-change: opacity;
-}
-
-.fog-system {
-  position: fixed;
-  inset: 0;
-  z-index: 3;
+  z-index: 2;
   overflow: hidden;
   pointer-events: none;
   mix-blend-mode: screen;
 
-  /*
-    Camera/weather fog layer.
-    Independent from scroll.
-    Strongest in upper/mid frame.
-    Fades out before the dark forest bottom.
-  */
   mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 58%,
-    rgba(0, 0, 0, 0.74) 70%,
-    rgba(0, 0, 0, 0.34) 84%,
+    black 60%,
+    rgba(0, 0, 0, 0.78) 72%,
+    rgba(0, 0, 0, 0.36) 86%,
     transparent 100%
   );
   -webkit-mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 58%,
-    rgba(0, 0, 0, 0.74) 70%,
-    rgba(0, 0, 0, 0.34) 84%,
+    black 60%,
+    rgba(0, 0, 0, 0.78) 72%,
+    rgba(0, 0, 0, 0.36) 86%,
     transparent 100%
   );
 }
@@ -100,32 +90,26 @@ body {
   will-change: transform, opacity;
 }
 
-/*
-  Primary visible fog body.
-  Stronger and less blurred than before.
-*/
+/* Primary visible fog body */
 .fog-plane-a {
-  top: -30vh;
-  left: -64vw;
-  width: 282vw;
-  height: 108vh;
-  opacity: 0.84;
+  top: -20vh;
+  left: -70vw;
+  width: 305vw;
+  height: 128vh;
+  opacity: 0.86;
   filter: blur(3px);
-  transform: rotate(-2.5deg) scale(1.12);
+  transform: rotate(-2.5deg) scale(1.14);
 }
 
-/*
-  Secondary broader fog body.
-  Softer, slightly lower, same right-to-left direction.
-*/
+/* Secondary broader fog body */
 .fog-plane-b {
-  top: -8vh;
-  left: -82vw;
-  width: 305vw;
-  height: 106vh;
-  opacity: 0.64;
+  top: 22vh;
+  left: -92vw;
+  width: 335vw;
+  height: 122vh;
+  opacity: 0.66;
   filter: blur(6px);
-  transform: rotate(1.5deg) scale(1.2);
+  transform: rotate(1.5deg) scale(1.22);
 }
 
 .fog-track {
@@ -139,7 +123,7 @@ body {
 
 .fog-track img {
   flex: 0 0 auto;
-  width: 142vw;
+  width: 150vw;
   height: 100%;
   object-fit: contain;
   opacity: 1;
@@ -147,12 +131,12 @@ body {
 
 .fog-track-a {
   animation-name: fog-flow-main;
-  animation-duration: 30s;
+  animation-duration: 28s;
 }
 
 .fog-track-b {
   animation-name: fog-flow-secondary;
-  animation-duration: 42s;
+  animation-duration: 40s;
 }
 
 @keyframes fog-flow-main {
@@ -173,6 +157,22 @@ body {
   to {
     transform: translate3d(-50%, -2vh, 0);
   }
+}
+
+.tone-wash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 5% 0%, rgba(235, 232, 205, 0.34), transparent 22%),
+    linear-gradient(
+      110deg,
+      rgba(178, 190, 176, 0.18),
+      rgba(81, 100, 86, 0.08) 45%,
+      rgba(0, 0, 0, 0)
+    );
+  mix-blend-mode: screen;
+  will-change: opacity;
 }
 
 .dark-veil {
@@ -272,34 +272,31 @@ body {
     height: 245vh;
   }
 
-  .forest-image {
-    width: auto;
+  .forest-world {
     height: 185vh;
-    min-width: 100vw;
-    min-height: 185vh;
   }
 
   .fog-plane-a {
-    top: -26vh;
-    left: -110vw;
-    width: 395vw;
-    height: 102vh;
-    opacity: 0.68;
-    filter: blur(4px);
-    transform: rotate(-2.5deg) scale(1.32);
+    top: -16vh;
+    left: -120vw;
+    width: 430vw;
+    height: 122vh;
+    opacity: 0.78;
+    filter: blur(3px);
+    transform: rotate(-2.5deg) scale(1.34);
   }
 
   .fog-plane-b {
-    top: -4vh;
-    left: -132vw;
-    width: 430vw;
-    height: 102vh;
-    opacity: 0.48;
-    filter: blur(8px);
+    top: 20vh;
+    left: -145vw;
+    width: 470vw;
+    height: 118vh;
+    opacity: 0.58;
+    filter: blur(6px);
     transform: rotate(1.5deg) scale(1.42);
   }
 
   .fog-track img {
-    width: 190vw;
+    width: 200vw;
   }
 }
