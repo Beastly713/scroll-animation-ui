@@ -109,8 +109,8 @@ body {
   left: -64vw;
   width: 282vw;
   height: 108vh;
-  opacity: 0.76;
-  filter: blur(4px);
+  opacity: 0.84;
+  filter: blur(3px);
   transform: rotate(-2.5deg) scale(1.12);
 }
 
@@ -123,8 +123,8 @@ body {
   left: -82vw;
   width: 305vw;
   height: 106vh;
-  opacity: 0.56;
-  filter: blur(8px);
+  opacity: 0.64;
+  filter: blur(6px);
   transform: rotate(1.5deg) scale(1.2);
 }
 
@@ -142,17 +142,17 @@ body {
   width: 142vw;
   height: 100%;
   object-fit: contain;
-  opacity: 0.98;
+  opacity: 1;
 }
 
 .fog-track-a {
   animation-name: fog-flow-main;
-  animation-duration: 36s;
+  animation-duration: 30s;
 }
 
 .fog-track-b {
   animation-name: fog-flow-secondary;
-  animation-duration: 50s;
+  animation-duration: 42s;
 }
 
 @keyframes fog-flow-main {
