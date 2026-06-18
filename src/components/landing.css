@@ -9,7 +9,7 @@ body {
 
 .landing-scroll {
   position: relative;
-  height: 230vh;
+  height: 260vh;
   background: #050501;
 }
 
@@ -23,75 +23,114 @@ body {
   color: #f4f1eb;
 }
 
-/* Background image: pale, low contrast, fog-first */
-.landing-bg {
+/* The forest is now a tall moving image, not a static zoomed background. */
+.forest-window {
   position: absolute;
-  inset: -7vh -7vw;
-  background-image: url("/images/home_fv_img.webp");
-  background-size: cover;
-  background-position: center 42%;
-  filter: brightness(1.06) contrast(0.66) saturate(0.62);
+  inset: 0;
+  overflow: hidden;
+  background: #050501;
+}
+
+.forest-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 154vh;
+  height: auto;
+  object-fit: cover;
+  object-position: center top;
+  user-select: none;
+  pointer-events: none;
+  filter: brightness(0.96) contrast(0.82) saturate(0.72);
   will-change: transform;
 }
 
-.landing-bg::after {
-  position: absolute;
-  inset: 0;
-  content: "";
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 8% 2%, rgba(245, 242, 218, 0.5), transparent 22%),
-    linear-gradient(
-      to bottom,
-      rgba(215, 224, 211, 0.24),
-      rgba(67, 82, 70, 0.14) 45%,
-      rgba(0, 0, 0, 0.28)
-    );
+/* If the source image is not tall enough for a viewport, force it into a tall scroll plane. */
+@media (min-aspect-ratio: 4/3) {
+  .forest-image {
+    width: 100vw;
+    min-height: 165vh;
+  }
 }
 
-/* Overall grey-green mist wash */
-.grey-atmosphere {
+.pale-wash {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 18% 8%, rgba(242, 240, 218, 0.62), transparent 28%),
+    radial-gradient(circle at 6% 0%, rgba(245, 242, 215, 0.56), transparent 24%),
     linear-gradient(
-      115deg,
-      rgba(198, 210, 196, 0.5),
-      rgba(105, 128, 112, 0.28) 44%,
-      rgba(25, 35, 28, 0.2)
+      108deg,
+      rgba(199, 213, 199, 0.44),
+      rgba(126, 145, 128, 0.26) 42%,
+      rgba(37, 51, 41, 0.12)
     );
   mix-blend-mode: screen;
   will-change: opacity;
 }
 
-/* Large fog mask base */
-.fog-layer {
+/*
+  Fog is independent from scroll.
+  It only uses CSS animations.
+  It is masked away near the bottom so the dark forest base can merge naturally later.
+*/
+.fog-system {
   position: absolute;
+  inset: 0;
+  overflow: hidden;
   pointer-events: none;
   mix-blend-mode: screen;
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 58%,
+    rgba(0, 0, 0, 0.72) 74%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 58%,
+    rgba(0, 0, 0, 0.72) 74%,
+    transparent 100%
+  );
+}
+
+.fog-plane {
+  position: absolute;
+  pointer-events: none;
   will-change: transform, opacity;
 }
 
-.fog-layer-a {
-  top: -30vh;
-  left: -85vw;
-  width: 285vw;
-  height: 122vh;
-  opacity: 0.58;
-  filter: blur(18px);
-  transform: rotate(-2deg) scale(1.28);
+.fog-plane-a {
+  top: -35vh;
+  left: -95vw;
+  width: 310vw;
+  height: 120vh;
+  opacity: 0.54;
+  filter: blur(22px);
+  transform: rotate(-3deg) scale(1.35);
 }
 
-.fog-layer-b {
-  top: 2vh;
-  left: -95vw;
-  width: 305vw;
-  height: 118vh;
+.fog-plane-b {
+  top: -5vh;
+  left: -110vw;
+  width: 340vw;
+  height: 122vh;
+  opacity: 0.34;
+  filter: blur(34px);
+  transform: rotate(2deg) scale(1.55);
+}
+
+.fog-plane-c {
+  top: -52vh;
+  left: -145vw;
+  width: 420vw;
+  height: 155vh;
   opacity: 0.36;
-  filter: blur(28px);
-  transform: rotate(3deg) scale(1.42);
+  filter: blur(42px);
+  transform: rotate(-5deg) scale(1.72);
 }
 
 .fog-track {
@@ -105,63 +144,38 @@ body {
 
 .fog-track img {
   flex: 0 0 auto;
-  width: 170vw;
+  width: 180vw;
   height: 100%;
   object-fit: contain;
+  opacity: 0.9;
 }
 
 .fog-track-a {
-  animation-name: fog-drift-left;
-  animation-duration: 118s;
+  animation-name: natural-fog-left;
+  animation-duration: 128s;
 }
 
 .fog-track-b {
-  animation-name: fog-drift-right;
-  animation-duration: 152s;
+  animation-name: natural-fog-right;
+  animation-duration: 168s;
 }
 
-/* Big camera-wash fog: this creates the pale fog passing over the lens */
-.fog-wash {
-  position: absolute;
-  top: -42vh;
-  left: -120vw;
-  width: 360vw;
-  height: 155vh;
-  pointer-events: none;
-  opacity: 0.46;
-  mix-blend-mode: screen;
-  filter: blur(36px);
-  transform: rotate(-5deg) scale(1.55);
-  will-change: transform, opacity;
+.fog-track-c {
+  animation-name: natural-fog-sweep;
+  animation-duration: 220s;
 }
 
-.fog-wash-track {
-  display: flex;
-  width: max-content;
-  height: 100%;
-  animation: fog-wash-pass 190s linear infinite;
-  will-change: transform;
-}
-
-.fog-wash-track img {
-  flex: 0 0 auto;
-  width: 215vw;
-  height: 100%;
-  object-fit: contain;
-  opacity: 0.92;
-}
-
-@keyframes fog-drift-left {
+@keyframes natural-fog-left {
   from {
     transform: translate3d(0, 0, 0);
   }
 
   to {
-    transform: translate3d(-50%, 3vh, 0);
+    transform: translate3d(-50%, 3.5vh, 0);
   }
 }
 
-@keyframes fog-drift-right {
+@keyframes natural-fog-right {
   from {
     transform: translate3d(-50%, 0, 0);
   }
@@ -171,33 +185,33 @@ body {
   }
 }
 
-@keyframes fog-wash-pass {
+@keyframes natural-fog-sweep {
   from {
-    transform: translate3d(-12%, 0, 0);
+    transform: translate3d(-8%, 0, 0);
   }
 
   to {
-    transform: translate3d(-58%, 6vh, 0);
+    transform: translate3d(-58%, 7vh, 0);
   }
 }
 
-/* Darkening should happen later, not immediately */
+/* Scroll-controlled darkening only. Fog does not depend on this. */
 .dark-veil {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 48% 42%, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.42) 76%),
+    radial-gradient(circle at 50% 38%, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.26) 72%),
     linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.02),
-      rgba(0, 0, 0, 0.16) 60%,
-      rgba(0, 0, 0, 0.48)
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.1) 52%,
+      rgba(0, 0, 0, 0.58) 100%
     );
   will-change: opacity;
 }
 
-/* Existing chrome/text kept, not part of this tuning pass */
+/* Existing chrome/text intentionally untouched in behavior pass. */
 .landing-chrome {
   position: fixed;
   inset: 0;
@@ -276,28 +290,33 @@ body {
 
 @media (max-width: 768px) {
   .landing-scroll {
-    height: 215vh;
+    height: 245vh;
   }
 
-  .landing-bg {
-    background-position: center 44%;
+  .forest-image {
+    left: 50%;
+    width: auto;
+    min-width: 100vw;
+    height: 165vh;
+    min-height: 165vh;
+    transform: translateX(-50%);
   }
 
-  .fog-layer-a {
-    left: -130vw;
-    width: 380vw;
-    transform: rotate(-2deg) scale(1.7);
+  .fog-plane-a {
+    left: -160vw;
+    width: 450vw;
+    transform: rotate(-3deg) scale(1.8);
   }
 
-  .fog-layer-b {
-    left: -145vw;
-    width: 410vw;
-    transform: rotate(3deg) scale(1.85);
+  .fog-plane-b {
+    left: -180vw;
+    width: 500vw;
+    transform: rotate(2deg) scale(2);
   }
 
-  .fog-wash {
-    left: -170vw;
-    width: 470vw;
-    transform: rotate(-5deg) scale(2);
+  .fog-plane-c {
+    left: -220vw;
+    width: 620vw;
+    transform: rotate(-5deg) scale(2.25);
   }
 }

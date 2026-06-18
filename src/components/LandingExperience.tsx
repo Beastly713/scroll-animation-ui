@@ -10,19 +10,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function LandingExperience() {
   const rootRef = useRef<HTMLDivElement | null>(null);
-  const bgRef = useRef<HTMLDivElement | null>(null);
-  const titleRef = useRef<HTMLDivElement | null>(null);
-  const fogARef = useRef<HTMLDivElement | null>(null);
-  const fogBRef = useRef<HTMLDivElement | null>(null);
-  const fogWashRef = useRef<HTMLDivElement | null>(null);
-  const greyWashRef = useRef<HTMLDivElement | null>(null);
+  const forestRef = useRef<HTMLImageElement | null>(null);
+  const paleWashRef = useRef<HTMLDivElement | null>(null);
   const darkVeilRef = useRef<HTMLDivElement | null>(null);
+  const titleRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!rootRef.current) return;
+    if (!rootRef.current || !forestRef.current) return;
 
     const lenis = new Lenis({
-      duration: 1.75,
+      duration: 1.65,
       easing: (t) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
       wheelMultiplier: 0.72,
@@ -30,46 +27,40 @@ export default function LandingExperience() {
 
     lenis.on("scroll", ScrollTrigger.update);
 
-    const ticker = (time: number) => {
+    const tick = (time: number) => {
       lenis.raf(time * 1000);
     };
 
-    gsap.ticker.add(ticker);
+    gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
     const ctx = gsap.context(() => {
-      gsap.set(bgRef.current, {
-        scale: 1.08,
-        yPercent: 0,
+      const getForestTravel = () => {
+        const img = forestRef.current;
+        if (!img) return -420;
+
+        const imageHeight = img.getBoundingClientRect().height;
+        const viewportHeight = window.innerHeight;
+
+        return -Math.max(imageHeight - viewportHeight, viewportHeight * 0.42);
+      };
+
+      gsap.set(forestRef.current, {
+        y: 0,
+        scale: 1.015,
+        transformOrigin: "50% 0%",
       });
 
-      gsap.set(fogARef.current, {
-        opacity: 0.58,
-        xPercent: 0,
-        yPercent: 0,
-      });
-
-      gsap.set(fogBRef.current, {
-        opacity: 0.36,
-        xPercent: 0,
-        yPercent: 0,
-      });
-
-      gsap.set(fogWashRef.current, {
-        opacity: 0.46,
-        xPercent: 0,
-      });
-
-      gsap.set(greyWashRef.current, {
-        opacity: 0.54,
+      gsap.set(paleWashRef.current, {
+        opacity: 0.62,
       });
 
       gsap.set(darkVeilRef.current, {
-        opacity: 0.08,
+        opacity: 0.03,
       });
 
       gsap.set(titleRef.current, {
-        opacity: 0.82,
+        opacity: 0.86,
         y: 0,
       });
 
@@ -78,82 +69,61 @@ export default function LandingExperience() {
           trigger: rootRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1.45,
+          scrub: 1.35,
+          invalidateOnRefresh: true,
         },
       });
 
       tl.to(
-        bgRef.current,
+        forestRef.current,
         {
-          scale: 1.16,
-          yPercent: -4.5,
+          y: getForestTravel,
+          scale: 1.0,
           ease: "none",
         },
         0,
       )
         .to(
-          fogARef.current,
+          paleWashRef.current,
           {
-            opacity: 0.82,
-            xPercent: -8,
-            yPercent: 2,
+            opacity: 0.18,
             ease: "none",
           },
           0,
         )
         .to(
-          fogBRef.current,
+          darkVeilRef.current,
           {
-            opacity: 0.62,
-            xPercent: 10,
-            yPercent: -3,
-            ease: "none",
-          },
-          0,
-        )
-        .to(
-          fogWashRef.current,
-          {
-            opacity: 0.72,
-            xPercent: -12,
-            ease: "none",
-          },
-          0.08,
-        )
-        .to(
-          greyWashRef.current,
-          {
-            opacity: 0.34,
+            opacity: 0.38,
             ease: "none",
           },
           0.18,
         )
         .to(
-          darkVeilRef.current,
-          {
-            opacity: 0.34,
-            ease: "none",
-          },
-          0.34,
-        )
-        .to(
           titleRef.current,
           {
             opacity: 0,
-            y: -28,
+            y: -24,
             ease: "power2.out",
           },
-          0.12,
+          0.1,
         );
     }, rootRef);
 
-    ScrollTrigger.refresh();
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("resize", refresh);
+
+    if (forestRef.current.complete) {
+      ScrollTrigger.refresh();
+    } else {
+      forestRef.current.addEventListener("load", refresh, { once: true });
+    }
 
     return () => {
+      window.removeEventListener("resize", refresh);
       ctx.revert();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      lenis.off("scroll", ScrollTrigger.update);
-      gsap.ticker.remove(ticker);
+      gsap.ticker.remove(tick);
       lenis.destroy();
     };
   }, []);
@@ -161,34 +131,45 @@ export default function LandingExperience() {
   return (
     <main ref={rootRef} className="landing-scroll">
       <section className="landing-stage">
-        <div ref={bgRef} className="landing-bg" />
-
-        <div ref={greyWashRef} className="grey-atmosphere" />
-
-        <div ref={fogARef} className="fog-layer fog-layer-a">
-          <div className="fog-track fog-track-a">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/common_fv_cloud01.webp" alt="" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/common_fv_cloud01.webp" alt="" />
-          </div>
+        <div className="forest-window">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            ref={forestRef}
+            className="forest-image"
+            src="/images/home_fc_img.webp"
+            alt=""
+            draggable={false}
+          />
         </div>
 
-        <div ref={fogBRef} className="fog-layer fog-layer-b">
-          <div className="fog-track fog-track-b">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/common_fv_cloud02.webp" alt="" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/common_fv_cloud02.webp" alt="" />
-          </div>
-        </div>
+        <div ref={paleWashRef} className="pale-wash" />
 
-        <div ref={fogWashRef} className="fog-wash">
-          <div className="fog-wash-track">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/common_fv_cloud01.webp" alt="" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/common_fv_cloud01.webp" alt="" />
+        <div className="fog-system" aria-hidden="true">
+          <div className="fog-plane fog-plane-a">
+            <div className="fog-track fog-track-a">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/common_fv_cloud01.webp" alt="" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/common_fv_cloud01.webp" alt="" />
+            </div>
+          </div>
+
+          <div className="fog-plane fog-plane-b">
+            <div className="fog-track fog-track-b">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/common_fv_cloud02.webp" alt="" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/common_fv_cloud02.webp" alt="" />
+            </div>
+          </div>
+
+          <div className="fog-plane fog-plane-c">
+            <div className="fog-track fog-track-c">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/common_fv_cloud01.webp" alt="" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/common_fv_cloud01.webp" alt="" />
+            </div>
           </div>
         </div>
 
