@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function LandingExperience() {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const forestRef = useRef<HTMLImageElement | null>(null);
-  const paleWashRef = useRef<HTMLDivElement | null>(null);
+  const toneRef = useRef<HTMLDivElement | null>(null);
   const darkVeilRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLDivElement | null>(null);
 
@@ -19,7 +19,7 @@ export default function LandingExperience() {
     if (!rootRef.current || !forestRef.current) return;
 
     const lenis = new Lenis({
-      duration: 1.65,
+      duration: 1.45,
       easing: (t) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
       wheelMultiplier: 0.72,
@@ -35,32 +35,32 @@ export default function LandingExperience() {
     gsap.ticker.lagSmoothing(0);
 
     const ctx = gsap.context(() => {
-      const getForestTravel = () => {
+      const getTravel = () => {
         const img = forestRef.current;
-        if (!img) return -420;
+        if (!img) return -window.innerHeight * 0.75;
 
-        const imageHeight = img.getBoundingClientRect().height;
-        const viewportHeight = window.innerHeight;
+        const rect = img.getBoundingClientRect();
+        const maxTravel = Math.max(rect.height - window.innerHeight, window.innerHeight * 0.75);
 
-        return -Math.max(imageHeight - viewportHeight, viewportHeight * 0.42);
+        return -maxTravel;
       };
 
       gsap.set(forestRef.current, {
         y: 0,
-        scale: 1.015,
+        scale: 1,
         transformOrigin: "50% 0%",
       });
 
-      gsap.set(paleWashRef.current, {
-        opacity: 0.62,
+      gsap.set(toneRef.current, {
+        opacity: 0.18,
       });
 
       gsap.set(darkVeilRef.current, {
-        opacity: 0.03,
+        opacity: 0.02,
       });
 
       gsap.set(titleRef.current, {
-        opacity: 0.86,
+        opacity: 0.88,
         y: 0,
       });
 
@@ -69,7 +69,7 @@ export default function LandingExperience() {
           trigger: rootRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1.35,
+          scrub: 1.2,
           invalidateOnRefresh: true,
         },
       });
@@ -77,16 +77,15 @@ export default function LandingExperience() {
       tl.to(
         forestRef.current,
         {
-          y: getForestTravel,
-          scale: 1.0,
+          y: getTravel,
           ease: "none",
         },
         0,
       )
         .to(
-          paleWashRef.current,
+          toneRef.current,
           {
-            opacity: 0.18,
+            opacity: 0.04,
             ease: "none",
           },
           0,
@@ -94,23 +93,24 @@ export default function LandingExperience() {
         .to(
           darkVeilRef.current,
           {
-            opacity: 0.38,
+            opacity: 0.26,
             ease: "none",
           },
-          0.18,
+          0.22,
         )
         .to(
           titleRef.current,
           {
             opacity: 0,
-            y: -24,
+            y: -22,
             ease: "power2.out",
           },
-          0.1,
+          0.12,
         );
     }, rootRef);
 
     const refresh = () => ScrollTrigger.refresh();
+
     window.addEventListener("resize", refresh);
 
     if (forestRef.current.complete) {
@@ -142,7 +142,7 @@ export default function LandingExperience() {
           />
         </div>
 
-        <div ref={paleWashRef} className="pale-wash" />
+        <div ref={toneRef} className="tone-wash" />
 
         <div className="fog-system" aria-hidden="true">
           <div className="fog-plane fog-plane-a">
@@ -160,15 +160,6 @@ export default function LandingExperience() {
               <img src="/images/common_fv_cloud02.webp" alt="" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/common_fv_cloud02.webp" alt="" />
-            </div>
-          </div>
-
-          <div className="fog-plane fog-plane-c">
-            <div className="fog-track fog-track-c">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/common_fv_cloud01.webp" alt="" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/common_fv_cloud01.webp" alt="" />
             </div>
           </div>
         </div>

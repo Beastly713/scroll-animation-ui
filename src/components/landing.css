@@ -23,7 +23,6 @@ body {
   color: #f4f1eb;
 }
 
-/* The forest is now a tall moving image, not a static zoomed background. */
 .forest-window {
   position: absolute;
   inset: 0;
@@ -34,65 +33,54 @@ body {
 .forest-image {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
   width: 100vw;
-  min-height: 154vh;
   height: auto;
+  min-height: 185vh;
+  transform: translateX(-50%);
   object-fit: cover;
   object-position: center top;
   user-select: none;
   pointer-events: none;
-  filter: brightness(0.96) contrast(0.82) saturate(0.72);
+  filter: brightness(0.98) contrast(0.9) saturate(0.76);
   will-change: transform;
 }
 
-/* If the source image is not tall enough for a viewport, force it into a tall scroll plane. */
-@media (min-aspect-ratio: 4/3) {
-  .forest-image {
-    width: 100vw;
-    min-height: 165vh;
-  }
-}
-
-.pale-wash {
+.tone-wash {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 6% 0%, rgba(245, 242, 215, 0.56), transparent 24%),
+    radial-gradient(circle at 5% 0%, rgba(235, 232, 205, 0.34), transparent 22%),
     linear-gradient(
-      108deg,
-      rgba(199, 213, 199, 0.44),
-      rgba(126, 145, 128, 0.26) 42%,
-      rgba(37, 51, 41, 0.12)
+      110deg,
+      rgba(178, 190, 176, 0.18),
+      rgba(81, 100, 86, 0.08) 45%,
+      rgba(0, 0, 0, 0)
     );
   mix-blend-mode: screen;
   will-change: opacity;
 }
 
-/*
-  Fog is independent from scroll.
-  It only uses CSS animations.
-  It is masked away near the bottom so the dark forest base can merge naturally later.
-*/
 .fog-system {
   position: absolute;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
   mix-blend-mode: screen;
+  opacity: 1;
   mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 58%,
-    rgba(0, 0, 0, 0.72) 74%,
+    black 56%,
+    rgba(0, 0, 0, 0.5) 76%,
     transparent 100%
   );
   -webkit-mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 58%,
-    rgba(0, 0, 0, 0.72) 74%,
+    black 56%,
+    rgba(0, 0, 0, 0.5) 76%,
     transparent 100%
   );
 }
@@ -100,37 +88,27 @@ body {
 .fog-plane {
   position: absolute;
   pointer-events: none;
-  will-change: transform, opacity;
+  will-change: transform;
 }
 
 .fog-plane-a {
-  top: -35vh;
-  left: -95vw;
-  width: 310vw;
-  height: 120vh;
-  opacity: 0.54;
-  filter: blur(22px);
-  transform: rotate(-3deg) scale(1.35);
+  top: -20vh;
+  left: -70vw;
+  width: 240vw;
+  height: 82vh;
+  opacity: 0.2;
+  filter: blur(12px);
+  transform: rotate(-2deg) scale(1.08);
 }
 
 .fog-plane-b {
-  top: -5vh;
-  left: -110vw;
-  width: 340vw;
-  height: 122vh;
-  opacity: 0.34;
-  filter: blur(34px);
-  transform: rotate(2deg) scale(1.55);
-}
-
-.fog-plane-c {
-  top: -52vh;
-  left: -145vw;
-  width: 420vw;
-  height: 155vh;
-  opacity: 0.36;
-  filter: blur(42px);
-  transform: rotate(-5deg) scale(1.72);
+  top: 10vh;
+  left: -84vw;
+  width: 260vw;
+  height: 88vh;
+  opacity: 0.14;
+  filter: blur(18px);
+  transform: rotate(2deg) scale(1.18);
 }
 
 .fog-track {
@@ -144,74 +122,58 @@ body {
 
 .fog-track img {
   flex: 0 0 auto;
-  width: 180vw;
+  width: 130vw;
   height: 100%;
   object-fit: contain;
-  opacity: 0.9;
+  opacity: 0.68;
 }
 
 .fog-track-a {
-  animation-name: natural-fog-left;
-  animation-duration: 128s;
+  animation-name: fog-drift-left;
+  animation-duration: 115s;
 }
 
 .fog-track-b {
-  animation-name: natural-fog-right;
-  animation-duration: 168s;
+  animation-name: fog-drift-right;
+  animation-duration: 155s;
 }
 
-.fog-track-c {
-  animation-name: natural-fog-sweep;
-  animation-duration: 220s;
-}
-
-@keyframes natural-fog-left {
+@keyframes fog-drift-left {
   from {
     transform: translate3d(0, 0, 0);
   }
 
   to {
-    transform: translate3d(-50%, 3.5vh, 0);
+    transform: translate3d(-50%, 2vh, 0);
   }
 }
 
-@keyframes natural-fog-right {
+@keyframes fog-drift-right {
   from {
     transform: translate3d(-50%, 0, 0);
   }
 
   to {
-    transform: translate3d(0, -4vh, 0);
+    transform: translate3d(0, -2vh, 0);
   }
 }
 
-@keyframes natural-fog-sweep {
-  from {
-    transform: translate3d(-8%, 0, 0);
-  }
-
-  to {
-    transform: translate3d(-58%, 7vh, 0);
-  }
-}
-
-/* Scroll-controlled darkening only. Fog does not depend on this. */
 .dark-veil {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 50% 38%, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.26) 72%),
+    radial-gradient(circle at 50% 36%, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.18) 76%),
     linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0),
-      rgba(0, 0, 0, 0.1) 52%,
-      rgba(0, 0, 0, 0.58) 100%
+      rgba(0, 0, 0, 0.06) 52%,
+      rgba(0, 0, 0, 0.42) 100%
     );
   will-change: opacity;
 }
 
-/* Existing chrome/text intentionally untouched in behavior pass. */
+/* unchanged chrome/text */
 .landing-chrome {
   position: fixed;
   inset: 0;
@@ -263,9 +225,9 @@ body {
 
 .landing-title {
   position: absolute;
+  z-index: 8;
   top: 50vh;
   left: 17.5vw;
-  z-index: 8;
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1rem, 1.35vw, 1.6rem);
   line-height: 1.4;
@@ -276,10 +238,10 @@ body {
 
 .landing-meta {
   position: fixed;
+  z-index: 10;
   right: 5vw;
   bottom: 5vh;
   left: 5vw;
-  z-index: 10;
   display: flex;
   justify-content: space-between;
   font-family: Georgia, serif;
@@ -294,29 +256,21 @@ body {
   }
 
   .forest-image {
-    left: 50%;
     width: auto;
+    height: 185vh;
     min-width: 100vw;
-    height: 165vh;
-    min-height: 165vh;
-    transform: translateX(-50%);
+    min-height: 185vh;
   }
 
   .fog-plane-a {
-    left: -160vw;
-    width: 450vw;
-    transform: rotate(-3deg) scale(1.8);
+    left: -100vw;
+    width: 310vw;
+    opacity: 0.18;
   }
 
   .fog-plane-b {
-    left: -180vw;
-    width: 500vw;
-    transform: rotate(2deg) scale(2);
-  }
-
-  .fog-plane-c {
-    left: -220vw;
-    width: 620vw;
-    transform: rotate(-5deg) scale(2.25);
+    left: -120vw;
+    width: 340vw;
+    opacity: 0.12;
   }
 }
