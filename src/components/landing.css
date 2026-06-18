@@ -65,22 +65,28 @@ body {
 .fog-system {
   position: absolute;
   inset: 0;
+  z-index: 3;
   overflow: hidden;
   pointer-events: none;
   mix-blend-mode: screen;
-  opacity: 1;
+
+  /*
+    Fog exists mostly in the upper/mid camera area.
+    It fades away near the lower forest so the dark bottom can later merge
+    naturally with the next room/ceiling scene.
+  */
   mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 56%,
-    rgba(0, 0, 0, 0.5) 76%,
+    black 62%,
+    rgba(0, 0, 0, 0.58) 78%,
     transparent 100%
   );
   -webkit-mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 56%,
-    rgba(0, 0, 0, 0.5) 76%,
+    black 62%,
+    rgba(0, 0, 0, 0.58) 78%,
     transparent 100%
   );
 }
@@ -88,27 +94,35 @@ body {
 .fog-plane {
   position: absolute;
   pointer-events: none;
-  will-change: transform;
+  will-change: transform, opacity;
 }
 
+/*
+  Main broad fog sheet.
+  This uses cloud01 and moves left-to-right slowly but visibly.
+*/
 .fog-plane-a {
-  top: -20vh;
-  left: -70vw;
-  width: 240vw;
-  height: 82vh;
-  opacity: 0.2;
-  filter: blur(12px);
-  transform: rotate(-2deg) scale(1.08);
+  top: -34vh;
+  left: -82vw;
+  width: 285vw;
+  height: 112vh;
+  opacity: 0.42;
+  filter: blur(9px);
+  transform: rotate(-2.5deg) scale(1.16);
 }
 
+/*
+  Secondary deeper fog sheet.
+  Lower opacity, different direction, slower.
+*/
 .fog-plane-b {
-  top: 10vh;
-  left: -84vw;
-  width: 260vw;
-  height: 88vh;
-  opacity: 0.14;
-  filter: blur(18px);
-  transform: rotate(2deg) scale(1.18);
+  top: -8vh;
+  left: -95vw;
+  width: 305vw;
+  height: 108vh;
+  opacity: 0.3;
+  filter: blur(14px);
+  transform: rotate(2deg) scale(1.24);
 }
 
 .fog-track {
@@ -122,20 +136,20 @@ body {
 
 .fog-track img {
   flex: 0 0 auto;
-  width: 130vw;
+  width: 145vw;
   height: 100%;
   object-fit: contain;
-  opacity: 0.68;
+  opacity: 0.78;
 }
 
 .fog-track-a {
   animation-name: fog-drift-left;
-  animation-duration: 115s;
+  animation-duration: 82s;
 }
 
 .fog-track-b {
   animation-name: fog-drift-right;
-  animation-duration: 155s;
+  animation-duration: 118s;
 }
 
 @keyframes fog-drift-left {
@@ -144,7 +158,7 @@ body {
   }
 
   to {
-    transform: translate3d(-50%, 2vh, 0);
+    transform: translate3d(-50%, 4vh, 0);
   }
 }
 
@@ -154,7 +168,7 @@ body {
   }
 
   to {
-    transform: translate3d(0, -2vh, 0);
+    transform: translate3d(0, -3vh, 0);
   }
 }
 
@@ -263,14 +277,24 @@ body {
   }
 
   .fog-plane-a {
-    left: -100vw;
-    width: 310vw;
-    opacity: 0.18;
+    top: -30vh;
+    left: -125vw;
+    width: 390vw;
+    height: 105vh;
+    opacity: 0.38;
+    transform: rotate(-2.5deg) scale(1.34);
   }
 
   .fog-plane-b {
-    left: -120vw;
-    width: 340vw;
-    opacity: 0.12;
+    top: -4vh;
+    left: -145vw;
+    width: 430vw;
+    height: 105vh;
+    opacity: 0.26;
+    transform: rotate(2deg) scale(1.42);
+  }
+
+  .fog-track img {
+    width: 190vw;
   }
 }
