@@ -37,223 +37,184 @@ export default function ScrollExperience() {
     gsap.ticker.lagSmoothing(0);
 
     const context = gsap.context(() => {
-      gsap.set(".js-room, .js-company, .js-editorial-canvas, .js-philosophy, .js-room-title, .js-project-list, .js-company-copy", {
-        autoAlpha: 0,
-      });
-      gsap.set(".js-label-room, .js-label-projects, .js-label-company", { autoAlpha: 0, y: 12 });
-      gsap.set(".js-hero-copy", { autoAlpha: 1, y: 0 });
-      gsap.set(".js-room-title-line", { autoAlpha: 0, yPercent: 110 });
-      gsap.set(".js-project-row", { autoAlpha: 0, y: 26 });
-      gsap.set(".js-company-copy > *", { autoAlpha: 0, y: 34 });
-      gsap.set(".js-philosophy > *", { autoAlpha: 0, y: 28 });
+      gsap.set(".js-reveal", { autoAlpha: 0, y: 52 });
 
-      const master = gsap.timeline({
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: ".js-hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        })
+        .to(".js-hero-bg", { scale: 1.16, yPercent: 12, ease: "none" }, 0)
+        .to(".js-hero-title", { autoAlpha: 0, y: -96, scale: 0.94, ease: "power2.out" }, 0)
+        .to(".js-hero-cloud-a", { xPercent: 18, yPercent: -4, ease: "none" }, 0)
+        .to(".js-hero-cloud-b", { xPercent: -16, yPercent: 3, ease: "none" }, 0);
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: ".js-bridge",
+            start: "top 72%",
+            end: "bottom 28%",
+            scrub: 1.15,
+          },
+        })
+        .to(".js-bridge-line", { scaleX: 1, autoAlpha: 1, ease: "power2.out" }, 0)
+        .to(".js-bridge-copy", { autoAlpha: 1, y: 0, ease: "power3.out" }, 0.12)
+        .to(".js-bridge-copy", { autoAlpha: 0, y: -32, ease: "power2.in" }, 0.72);
+
+      const projectTimeline = gsap.timeline({
         scrollTrigger: {
-          trigger: ".js-scroll-track",
+          trigger: ".js-projects",
           start: "top top",
-          end: "bottom bottom",
-          scrub: 1.45,
+          end: "+=260%",
+          pin: true,
+          scrub: 1.35,
+          anticipatePin: 1,
         },
       });
 
-      master
-        .to(".js-progress", { scaleY: 1, ease: "none" }, 0)
-        .to(".js-hero", { scale: 1.18, xPercent: -3.5, yPercent: 4, filter: "blur(1.8px)", ease: "none" }, 0)
-        .to(".js-fog-a", { xPercent: 28, yPercent: -6, scale: 1.13, opacity: 0.78, ease: "none" }, 0)
-        .to(".js-fog-b", { xPercent: -24, yPercent: 8, scale: 1.2, opacity: 0.72, ease: "none" }, 0)
-        .to(".js-hero-copy", { autoAlpha: 0, y: -42, filter: "blur(6px)", ease: "power2.inOut" }, 0.12)
-        .to(".js-veil", { opacity: 0.78, ease: "none" }, 0.18)
-        .to(".js-room", { autoAlpha: 0.42, scale: 1.08, yPercent: 2, ease: "none" }, 0.24)
-        .to(".js-label-hero", { autoAlpha: 0, y: -12, ease: "power2.out" }, 0.27)
-        .to(".js-label-room", { autoAlpha: 1, y: 0, ease: "power2.out" }, 0.3)
-        .to(".js-editorial-canvas", { autoAlpha: 0.92, scaleX: 1, ease: "power2.inOut" }, 0.34)
-        .to(".js-philosophy", { autoAlpha: 1, ease: "power2.out" }, 0.38)
-        .to(".js-philosophy > *", { autoAlpha: 1, y: 0, stagger: 0.05, ease: "power3.out" }, 0.4)
-        .to(".js-room", { autoAlpha: 0.72, scale: 1.03, yPercent: -2, ease: "none" }, 0.42)
-        .to(".js-hero", { autoAlpha: 0, scale: 1.26, ease: "none" }, 0.46)
-        .to(".js-philosophy", { autoAlpha: 0, y: -38, filter: "blur(4px)", ease: "power2.in" }, 0.53)
-        .to(".js-editorial-canvas", { autoAlpha: 0.24, scaleX: 1.18, ease: "power2.inOut" }, 0.56)
-        .to(".js-room", { autoAlpha: 1, scale: 1.16, xPercent: -2, yPercent: -6, filter: "blur(0px)", ease: "none" }, 0.56)
-        .to(".js-veil", { opacity: 0.38, ease: "none" }, 0.58)
-        .to(".js-room-title", { autoAlpha: 1, ease: "power2.out" }, 0.6)
-        .to(".js-room-title-line", { autoAlpha: 1, yPercent: 0, stagger: 0.075, ease: "power3.out" }, 0.62)
-        .to(".js-label-room", { autoAlpha: 0, y: -12, ease: "power2.out" }, 0.68)
-        .to(".js-label-projects", { autoAlpha: 1, y: 0, ease: "power2.out" }, 0.7)
-        .to(".js-room-title", { autoAlpha: 0, y: -70, filter: "blur(7px)", ease: "power2.in" }, 0.74)
-        .to(".js-veil", { opacity: 0.9, ease: "none" }, 0.76)
-        .to(".js-room", { autoAlpha: 0.22, scale: 1.24, yPercent: -10, filter: "blur(3px)", ease: "none" }, 0.76)
-        .to(".js-project-list", { autoAlpha: 1, ease: "power2.out" }, 0.79)
-        .to(".js-project-row", { autoAlpha: 1, y: 0, stagger: 0.045, ease: "power3.out" }, 0.8)
-        .to(".js-project-list", { autoAlpha: 0, y: -38, filter: "blur(4px)", ease: "power2.in" }, 0.88)
-        .to(".js-label-projects", { autoAlpha: 0, y: -12, ease: "power2.out" }, 0.9)
-        .to(".js-label-company", { autoAlpha: 1, y: 0, ease: "power2.out" }, 0.92)
-        .to(".js-company", { autoAlpha: 1, scale: 1.08, yPercent: -2, ease: "none" }, 0.9)
-        .to(".js-room", { autoAlpha: 0, scale: 1.3, ease: "none" }, 0.92)
-        .to(".js-veil", { opacity: 0.46, ease: "none" }, 0.93)
-        .to(".js-company-copy", { autoAlpha: 1, ease: "power2.out" }, 0.94)
-        .to(".js-company-copy > *", { autoAlpha: 1, y: 0, stagger: 0.06, ease: "power3.out" }, 0.95)
-        .to(".js-company", { scale: 1.18, xPercent: 2, yPercent: 4, ease: "none" }, 0.94)
-        .to(".js-fog-a", { xPercent: -8, opacity: 0.64, ease: "none" }, 0.94)
-        .to(".js-fog-b", { xPercent: 12, opacity: 0.58, ease: "none" }, 0.94);
+      projectTimeline
+        .fromTo(".js-projects-bg", { scale: 1.08, yPercent: 0 }, { scale: 1.24, yPercent: -9, ease: "none" }, 0)
+        .fromTo(".js-projects-shade", { opacity: 0.62 }, { opacity: 0.82, ease: "none" }, 0)
+        .to(".js-projects-kicker", { autoAlpha: 1, y: 0, ease: "power3.out" }, 0.08)
+        .to(".js-projects-heading", { autoAlpha: 1, y: 0, ease: "power3.out" }, 0.16)
+        .to(".js-projects-copy", { autoAlpha: 1, y: 0, ease: "power3.out" }, 0.26)
+        .to(".js-projects-panel", { xPercent: -8, ease: "none" }, 0.28)
+        .to(".js-projects-kicker, .js-projects-heading, .js-projects-copy", { autoAlpha: 0, y: -54, ease: "power2.in" }, 0.68)
+        .to(".js-projects-mark", { autoAlpha: 0.7, scale: 1, ease: "power2.out" }, 0.72)
+        .to(".js-projects-mark", { autoAlpha: 0, y: -24, ease: "power2.in" }, 0.94);
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: ".js-company",
+            start: "top 82%",
+            end: "bottom top",
+            scrub: 1.25,
+          },
+        })
+        .fromTo(".js-company-bg", { scale: 1.04, yPercent: -8 }, { scale: 1.18, yPercent: 8, ease: "none" }, 0)
+        .to(".js-company-cloud-a", { xPercent: -14, yPercent: 4, ease: "none" }, 0)
+        .to(".js-company-cloud-b", { xPercent: 18, yPercent: -5, ease: "none" }, 0)
+        .to(".js-company-text", { autoAlpha: 1, y: 0, ease: "power3.out" }, 0.18)
+        .to(".js-company-text", { autoAlpha: 0.2, y: -44, ease: "power2.in" }, 0.84);
 
       ScrollTrigger.refresh();
     }, rootRef);
 
     return () => {
       context.revert();
-      lenis.off("scroll", ScrollTrigger.update);
       lenis.destroy();
       gsap.ticker.remove(updateLenis);
     };
   }, []);
 
   return (
-    <main ref={rootRef} className="relative bg-black text-stone-100">
+    <main ref={rootRef} className="relative min-h-screen overflow-hidden bg-black text-stone-100">
       <div className="grain" />
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-50 flex items-start justify-between px-5 py-5 text-[0.62rem] uppercase tracking-[0.32em] text-stone-300/72 md:px-10 md:py-9">
-        <div className="flex items-start gap-8 md:gap-12">
-          <div className="h-9 w-9 border border-stone-200/28">
-            <span className="block h-full w-full scale-[0.58] border border-[#b5a16c]/60" />
-          </div>
-          <div className="relative hidden h-44 w-7 md:block">
-            <div className="absolute left-3 top-0 h-full w-px origin-top bg-stone-200/15">
-              <span className="js-progress block h-full w-px origin-top scale-y-0 bg-[#b5a16c]/70" />
-            </div>
-            <div className="absolute left-7 top-0 h-full">
-              <span className="js-label-hero absolute left-0 top-0 vertical-label">Forest</span>
-              <span className="js-label-room absolute left-0 top-0 vertical-label">Architecture</span>
-              <span className="js-label-projects absolute left-0 top-0 vertical-label">Projects</span>
-              <span className="js-label-company absolute left-0 top-0 vertical-label">Company</span>
-            </div>
-          </div>
+
+      <section className="js-hero cinematic-vignette relative flex min-h-screen items-center justify-center overflow-hidden">
+        <Image
+          src="/images/home_fv_img.webp"
+          alt="Dark forest at night"
+          fill
+          priority
+          sizes="100vw"
+          className="js-hero-bg image-cover"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.86),rgba(0,0,0,0.24)_42%,rgba(0,0,0,0.82))]" />
+        <CloudLayer
+          src={CLOUD_ONE}
+          priority
+          className="js-hero-cloud-a left-[-16vw] top-[4vh] h-[42vh] w-[132vw] opacity-45 blur-[0.5px]"
+        />
+        <CloudLayer
+          src={CLOUD_TWO}
+          priority
+          className="js-hero-cloud-b bottom-[2vh] right-[-22vw] h-[38vh] w-[125vw] opacity-36"
+        />
+        <div className="js-hero-title relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center px-6 text-center">
+          <p className="mb-7 text-[0.66rem] uppercase tracking-[0.48em] text-[#b5a16c] md:text-xs">
+            Kyoto atelier of shadow and silence
+          </p>
+          <h1 className="editorial-title max-w-5xl text-[clamp(4rem,12vw,11rem)] leading-[0.82] text-stone-100">
+            Kuro Mori
+          </h1>
+          <p className="mt-8 max-w-2xl text-sm leading-7 text-stone-300/78 md:text-base md:leading-8">
+            A slow passage through forest, architecture, and smoke-softened light.
+          </p>
         </div>
-        <div className="flex items-center gap-5 text-stone-300/62 md:gap-8">
-          <span>EN</span>
-          <span>JA</span>
-          <span>Menu</span>
+      </section>
+
+      <section className="js-bridge relative grid min-h-[92vh] place-items-center overflow-hidden bg-black px-6">
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/20 to-black" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/80 to-transparent" />
+        <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center">
+          <div className="js-bridge-line mb-10 h-px w-48 origin-center scale-x-0 bg-[#b5a16c]/70 opacity-0" />
+          <p className="js-bridge-copy translate-y-12 text-[0.68rem] uppercase tracking-[0.58em] text-stone-400 opacity-0 md:text-xs">
+            The forest releases its breath. The room begins to appear.
+          </p>
         </div>
-      </div>
+      </section>
 
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex items-end justify-between px-5 pb-5 text-[0.58rem] uppercase tracking-[0.3em] text-stone-300/55 md:px-10 md:pb-9">
-        <p>Tokyo / Kyoto / 2026</p>
-        <p>Scroll</p>
-      </div>
-
-      <section className="js-scroll-track relative h-[920vh] bg-black">
-        <div className="sticky top-0 h-screen overflow-hidden bg-black">
-          <div className="absolute inset-0">
-            <Image
-              src="/images/home_fv_img.webp"
-              alt="Dark forest at night"
-              fill
-              priority
-              sizes="100vw"
-              className="js-hero image-cover"
-            />
-            <Image
-              src="/images/home_projects_img.webp"
-              alt="Dark architectural room"
-              fill
-              priority
-              sizes="100vw"
-              className="js-room image-cover opacity-0"
-            />
-            <Image
-              src="/images/home_company_img.webp"
-              alt="Dark forest surrounding the company"
-              fill
-              sizes="100vw"
-              className="js-company image-cover opacity-0"
-            />
-          </div>
-
-          <CloudLayer
-            src={CLOUD_ONE}
-            priority
-            className="js-fog-a fog-layer -left-[34vw] top-[-12vh] h-[76vh] w-[174vw] opacity-45"
-            imageClassName="opacity-80 blur-[1.5px]"
-          />
-          <CloudLayer
-            src={CLOUD_TWO}
-            priority
-            className="js-fog-b fog-layer bottom-[-18vh] right-[-40vw] h-[82vh] w-[184vw] opacity-36"
-            imageClassName="opacity-75 blur-[2px]"
-          />
-
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(0,0,0,0.05),rgba(0,0,0,0.58)_68%,rgba(0,0,0,0.9)),linear-gradient(90deg,rgba(0,0,0,0.8),rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.82))]" />
-          <div className="js-veil absolute inset-0 bg-black opacity-20" />
-
-          <div className="js-editorial-canvas absolute left-1/2 top-1/2 h-[68vh] w-[76vw] origin-center -translate-x-1/2 -translate-y-1/2 scale-x-[0.82] border border-stone-200/8 bg-black/90 opacity-0 shadow-[0_0_120px_rgba(0,0,0,0.9)] md:w-[64vw]" />
-
-          <div className="js-hero-copy absolute inset-0 z-10 grid place-items-center px-6 text-center">
-            <div>
-              <p className="mb-8 text-[0.62rem] uppercase tracking-[0.56em] text-[#b5a16c]/78">
-                Kuro Mori
-              </p>
-              <h1 className="editorial-title text-[clamp(2.4rem,6vw,6.4rem)] leading-none text-stone-100/92">
-                Remember who you are
-              </h1>
-            </div>
-          </div>
-
-          <div className="js-philosophy absolute inset-0 z-20 flex items-center px-6 md:px-[13vw]">
-            <div className="max-w-2xl">
-              <p className="mb-8 text-[0.62rem] uppercase tracking-[0.48em] text-[#b5a16c]/72">
-                Philosophy
-              </p>
-              <p className="editorial-title text-[clamp(2.4rem,6.6vw,7rem)] leading-[0.92] text-stone-100">
-                The room is not entered. It is remembered.
-              </p>
-              <div className="mt-12 h-px w-48 bg-stone-200/28" />
-              <p className="mt-8 max-w-md text-sm leading-8 text-stone-300/64">
-                Shadow gathers at the edge of timber, paper, stone, and breath. The image stays open long enough for silence to take form.
-              </p>
-            </div>
-            <div className="ml-auto hidden h-[42vh] w-[22vw] border border-stone-200/10 bg-stone-100/[0.03] md:block" />
-          </div>
-
-          <div className="js-room-title absolute inset-0 z-20 flex items-center px-6 md:px-[11vw]">
-            <h2 className="editorial-title max-w-5xl overflow-hidden text-[clamp(4rem,10vw,11.5rem)] leading-[0.86] text-stone-100">
-              <span className="js-room-title-line block">Designing</span>
-              <span className="js-room-title-line block">the Dimensions</span>
-              <span className="js-room-title-line block">of Life</span>
+      <section className="js-projects cinematic-vignette relative min-h-screen overflow-hidden bg-black">
+        <Image
+          src="/images/home_projects_img.webp"
+          alt="A dark luxury room interior"
+          fill
+          sizes="100vw"
+          className="js-projects-bg image-cover"
+        />
+        <div className="js-projects-shade absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.88),rgba(0,0,0,0.36)_48%,rgba(0,0,0,0.72))]" />
+        <div className="js-projects-panel relative z-10 flex min-h-screen items-center px-6 py-24 md:px-16 lg:px-24">
+          <div className="max-w-3xl">
+            <p className="js-projects-kicker js-reveal mb-7 text-[0.66rem] uppercase tracking-[0.52em] text-[#b5a16c] md:text-xs">
+              Projects
+            </p>
+            <h2 className="js-projects-heading js-reveal editorial-title max-w-3xl text-[clamp(3.6rem,9vw,9rem)] leading-[0.86] text-stone-100">
+              Rooms shaped by darkness.
             </h2>
+            <p className="js-projects-copy js-reveal mt-8 max-w-xl text-sm leading-8 text-stone-300/76 md:text-lg md:leading-9">
+              Materials are allowed to recede, so lacquer, paper, stone, and shadow can hold the frame with restraint.
+            </p>
           </div>
+        </div>
+        <p className="js-projects-mark editorial-title pointer-events-none absolute bottom-[10vh] right-[7vw] z-10 scale-95 text-[clamp(4rem,12vw,12rem)] leading-none text-stone-200/0 opacity-0">
+          間
+        </p>
+      </section>
 
-          <div className="js-project-list absolute inset-0 z-20 flex items-center justify-center px-6">
-            <div className="w-full max-w-5xl">
-              <p className="mb-12 text-[0.62rem] uppercase tracking-[0.5em] text-[#b5a16c]/70">
-                Selected works
-              </p>
-              {["House of Ash", "Garden for Low Light", "Listening Room", "Threshold Pavilion"].map((project, index) => (
-                <div
-                  className="js-project-row flex items-baseline justify-between border-t border-stone-200/12 py-6 text-stone-200/82 last:border-b"
-                  key={project}
-                >
-                  <span className="editorial-title text-[clamp(2.1rem,5vw,5.4rem)] leading-none">
-                    {project}
-                  </span>
-                  <span className="text-[0.58rem] uppercase tracking-[0.34em] text-stone-400/70">
-                    0{index + 1}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="js-company-copy absolute inset-0 z-20 flex items-center px-6 md:px-[12vw]">
-            <div className="ml-auto max-w-3xl">
-              <p className="mb-8 text-[0.62rem] uppercase tracking-[0.5em] text-[#b5a16c]/74">
-                Company
-              </p>
-              <h2 className="editorial-title text-[clamp(3.1rem,7.5vw,8.2rem)] leading-[0.9] text-stone-100">
-                A studio at the edge of forest and form.
-              </h2>
-              <p className="mt-9 max-w-xl text-sm leading-8 text-stone-300/68 md:text-base md:leading-9">
-                We compose spaces slowly, allowing atmosphere to decide what should remain visible.
-              </p>
-            </div>
-          </div>
+      <section className="js-company cinematic-vignette relative flex min-h-screen items-center overflow-hidden bg-black px-6 py-24 md:px-16 lg:px-24">
+        <Image
+          src="/images/home_company_img.webp"
+          alt="A second dark forest scene"
+          fill
+          sizes="100vw"
+          className="js-company-bg image-cover"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.86),rgba(0,0,0,0.34)_46%,rgba(0,0,0,0.74))]" />
+        <CloudLayer
+          src={CLOUD_TWO}
+          className="js-company-cloud-a left-[-24vw] top-[8vh] h-[40vh] w-[138vw] opacity-38"
+        />
+        <CloudLayer
+          src={CLOUD_ONE}
+          className="js-company-cloud-b bottom-[8vh] right-[-18vw] h-[35vh] w-[118vw] opacity-28 blur-[0.6px]"
+        />
+        <div className="js-company-text relative z-10 mx-auto max-w-5xl translate-y-16 opacity-0">
+          <p className="mb-7 text-[0.66rem] uppercase tracking-[0.52em] text-[#b5a16c] md:text-xs">
+            Company
+          </p>
+          <h2 className="editorial-title max-w-4xl text-[clamp(3.3rem,8vw,8.5rem)] leading-[0.9] text-stone-100">
+            Returning to the quiet edge of the woods.
+          </h2>
+          <p className="mt-8 max-w-2xl text-sm leading-8 text-stone-300/78 md:text-lg md:leading-9">
+            A studio language of restraint, ritual, and atmosphere, composed for spaces that are remembered slowly.
+          </p>
         </div>
       </section>
     </main>

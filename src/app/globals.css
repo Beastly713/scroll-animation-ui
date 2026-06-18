@@ -73,17 +73,17 @@ body.lenis html {
 .cloud-drift {
   pointer-events: none;
   transform: translate3d(0, 0, 0);
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
-.fog-layer {
-  mix-blend-mode: screen;
-  filter: saturate(0.5) contrast(1.2);
-}
-
-.vertical-label {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+.cinematic-vignette::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.1) 42%, rgba(0, 0, 0, 0.72) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.42), transparent 28%, transparent 62%, rgba(0, 0, 0, 0.78));
 }
 
 .grain {
