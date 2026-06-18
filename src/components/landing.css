@@ -7,13 +7,9 @@ body {
   overflow-x: hidden;
 }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
 .landing-scroll {
   position: relative;
-  height: 220vh;
+  height: 230vh;
   background: #050501;
 }
 
@@ -27,13 +23,14 @@ body {
   color: #f4f1eb;
 }
 
+/* Background image: pale, low contrast, fog-first */
 .landing-bg {
   position: absolute;
-  inset: -5vh -5vw;
+  inset: -7vh -7vw;
   background-image: url("/images/home_fv_img.webp");
   background-size: cover;
-  background-position: center center;
-  filter: contrast(0.92) saturate(0.82) brightness(0.82);
+  background-position: center 42%;
+  filter: brightness(1.06) contrast(0.66) saturate(0.62);
   will-change: transform;
 }
 
@@ -43,90 +40,164 @@ body {
   content: "";
   pointer-events: none;
   background:
-    radial-gradient(circle at 20% 10%, rgba(255, 255, 235, 0.22), transparent 24%),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.42));
+    radial-gradient(circle at 8% 2%, rgba(245, 242, 218, 0.5), transparent 22%),
+    linear-gradient(
+      to bottom,
+      rgba(215, 224, 211, 0.24),
+      rgba(67, 82, 70, 0.14) 45%,
+      rgba(0, 0, 0, 0.28)
+    );
 }
 
-.landing-clouds {
+/* Overall grey-green mist wash */
+.grey-atmosphere {
   position: absolute;
-  left: -40vw;
-  width: 180vw;
+  inset: 0;
   pointer-events: none;
-  opacity: 0.42;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(242, 240, 218, 0.62), transparent 28%),
+    linear-gradient(
+      115deg,
+      rgba(198, 210, 196, 0.5),
+      rgba(105, 128, 112, 0.28) 44%,
+      rgba(25, 35, 28, 0.2)
+    );
   mix-blend-mode: screen;
-  filter: blur(10px);
+  will-change: opacity;
+}
+
+/* Large fog mask base */
+.fog-layer {
+  position: absolute;
+  pointer-events: none;
+  mix-blend-mode: screen;
   will-change: transform, opacity;
 }
 
-.landing-clouds-a {
-  top: -14vh;
-  height: 72vh;
-  transform: scale(1.35);
+.fog-layer-a {
+  top: -30vh;
+  left: -85vw;
+  width: 285vw;
+  height: 122vh;
+  opacity: 0.58;
+  filter: blur(18px);
+  transform: rotate(-2deg) scale(1.28);
 }
 
-.landing-clouds-b {
-  top: 18vh;
-  height: 82vh;
-  opacity: 0.32;
-  transform: scale(1.65) rotate(-2deg);
+.fog-layer-b {
+  top: 2vh;
+  left: -95vw;
+  width: 305vw;
+  height: 118vh;
+  opacity: 0.36;
+  filter: blur(28px);
+  transform: rotate(3deg) scale(1.42);
 }
 
-.cloud-track {
+.fog-track {
   display: flex;
   width: max-content;
   height: 100%;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+  will-change: transform;
 }
 
-.cloud-track img {
+.fog-track img {
   flex: 0 0 auto;
-  width: 140vw;
+  width: 170vw;
   height: 100%;
   object-fit: contain;
-  opacity: 0.8;
 }
 
-.cloud-track-slow {
+.fog-track-a {
   animation-name: fog-drift-left;
-  animation-duration: 95s;
+  animation-duration: 118s;
 }
 
-.cloud-track-fast {
+.fog-track-b {
   animation-name: fog-drift-right;
-  animation-duration: 130s;
+  animation-duration: 152s;
+}
+
+/* Big camera-wash fog: this creates the pale fog passing over the lens */
+.fog-wash {
+  position: absolute;
+  top: -42vh;
+  left: -120vw;
+  width: 360vw;
+  height: 155vh;
+  pointer-events: none;
+  opacity: 0.46;
+  mix-blend-mode: screen;
+  filter: blur(36px);
+  transform: rotate(-5deg) scale(1.55);
+  will-change: transform, opacity;
+}
+
+.fog-wash-track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  animation: fog-wash-pass 190s linear infinite;
+  will-change: transform;
+}
+
+.fog-wash-track img {
+  flex: 0 0 auto;
+  width: 215vw;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.92;
 }
 
 @keyframes fog-drift-left {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 3vh, 0);
   }
 }
 
 @keyframes fog-drift-right {
   from {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 
   to {
-    transform: translateX(0);
+    transform: translate3d(0, -4vh, 0);
   }
 }
 
-.landing-veil {
+@keyframes fog-wash-pass {
+  from {
+    transform: translate3d(-12%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-58%, 6vh, 0);
+  }
+}
+
+/* Darkening should happen later, not immediately */
+.dark-veil {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 50% 45%, rgba(5, 5, 1, 0.05), rgba(5, 5, 1, 0.48) 72%),
-    linear-gradient(to bottom, rgba(5, 5, 1, 0.08), rgba(5, 5, 1, 0.42));
+    radial-gradient(circle at 48% 42%, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.42) 76%),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.02),
+      rgba(0, 0, 0, 0.16) 60%,
+      rgba(0, 0, 0, 0.48)
+    );
   will-change: opacity;
 }
 
+/* Existing chrome/text kept, not part of this tuning pass */
 .landing-chrome {
   position: fixed;
   inset: 0;
@@ -178,7 +249,7 @@ body {
 
 .landing-title {
   position: absolute;
-  top: 49vh;
+  top: 50vh;
   left: 17.5vw;
   z-index: 8;
   font-family: Georgia, "Times New Roman", serif;
@@ -203,43 +274,30 @@ body {
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .cloud-track {
-    animation-duration: 1ms;
-    animation-iteration-count: 1;
-  }
-}
-
 @media (max-width: 768px) {
   .landing-scroll {
-    height: 200vh;
+    height: 215vh;
   }
 
-  .brand {
-    top: 3vh;
-    left: 6vw;
+  .landing-bg {
+    background-position: center 44%;
   }
 
-  .top-nav {
-    top: 4vh;
-    right: 6vw;
-    gap: 1rem;
+  .fog-layer-a {
+    left: -130vw;
+    width: 380vw;
+    transform: rotate(-2deg) scale(1.7);
   }
 
-  .top-nav span:last-child {
-    margin-left: 2rem;
+  .fog-layer-b {
+    left: -145vw;
+    width: 410vw;
+    transform: rotate(3deg) scale(1.85);
   }
 
-  .landing-title {
-    top: 52vh;
-    left: 8vw;
-  }
-
-  .landing-clouds-a {
-    transform: scale(2);
-  }
-
-  .landing-clouds-b {
-    transform: scale(2.25) rotate(-2deg);
+  .fog-wash {
+    left: -170vw;
+    width: 470vw;
+    transform: rotate(-5deg) scale(2);
   }
 }
