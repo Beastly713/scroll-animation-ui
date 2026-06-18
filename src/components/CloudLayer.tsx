@@ -23,7 +23,7 @@ export default function CloudLayer({
         fill
         priority={priority}
         sizes="100vw"
-        className={`object-cover opacity-70 ${imageClassName}`}
+        className={`object-cover ${imageClassName}`}
       />
     </div>
   );
