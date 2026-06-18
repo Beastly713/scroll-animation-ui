@@ -163,6 +163,24 @@ export default function LandingExperience() {
                   <img src="/images/common_fv_cloud02.webp" alt="" />
                 </div>
               </div>
+
+              <div className="fog-plane fog-plane-c">
+                <div className="fog-track fog-track-c">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/common_fv_cloud01.webp" alt="" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/common_fv_cloud01.webp" alt="" />
+                </div>
+              </div>
+
+              <div className="fog-plane fog-plane-d">
+                <div className="fog-track fog-track-d">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/common_fv_cloud02.webp" alt="" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/common_fv_cloud02.webp" alt="" />
+                </div>
+              </div>
             </div>
           </div>
         </div>

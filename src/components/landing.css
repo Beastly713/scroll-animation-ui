@@ -55,8 +55,8 @@ body {
 
 /*
   Fog belongs to the scrolling forest world.
-  It covers upper + mid + lower-mid forest,
-  but fades before the darkest bottom merge region.
+  It covers upper/mid/lower-mid forest,
+  but still fades before the absolute darkest bottom merge region.
 */
 .fog-system {
   position: absolute;
@@ -69,17 +69,17 @@ body {
   mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 72%,
-    rgba(0, 0, 0, 0.86) 82%,
-    rgba(0, 0, 0, 0.5) 91%,
+    black 74%,
+    rgba(0, 0, 0, 0.86) 84%,
+    rgba(0, 0, 0, 0.44) 93%,
     transparent 99%
   );
   -webkit-mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 72%,
-    rgba(0, 0, 0, 0.86) 82%,
-    rgba(0, 0, 0, 0.5) 91%,
+    black 74%,
+    rgba(0, 0, 0, 0.86) 84%,
+    rgba(0, 0, 0, 0.44) 93%,
     transparent 99%
   );
 }
@@ -137,6 +137,28 @@ body {
   transform: rotate(1.5deg) scale(1.24);
 }
 
+/* Lower primary fog body: repeated cloud01, phase-shifted */
+.fog-plane-c {
+  top: 62vh;
+  left: -78vw;
+  width: 325vw;
+  height: 110vh;
+  opacity: 0.58;
+  filter: blur(4px);
+  transform: rotate(-1.8deg) scale(1.18);
+}
+
+/* Lower secondary fog body: repeated cloud02, slower and offset */
+.fog-plane-d {
+  top: 82vh;
+  left: -102vw;
+  width: 355vw;
+  height: 104vh;
+  opacity: 0.46;
+  filter: blur(7px);
+  transform: rotate(1.6deg) scale(1.24);
+}
+
 .fog-track {
   display: flex;
   width: max-content;
@@ -164,6 +186,18 @@ body {
   animation-duration: 37s;
 }
 
+.fog-track-c {
+  animation-name: fog-flow-lower-main;
+  animation-duration: 33s;
+  animation-delay: -11s;
+}
+
+.fog-track-d {
+  animation-name: fog-flow-lower-secondary;
+  animation-duration: 47s;
+  animation-delay: -19s;
+}
+
 @keyframes fog-flow-main {
   from {
     transform: translate3d(0, 0, 0);
@@ -181,6 +215,26 @@ body {
 
   to {
     transform: translate3d(-50%, -2vh, 0);
+  }
+}
+
+@keyframes fog-flow-lower-main {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 2vh, 0);
+  }
+}
+
+@keyframes fog-flow-lower-secondary {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, -1.5vh, 0);
   }
 }
 
@@ -329,6 +383,26 @@ body {
     opacity: 0.64;
     filter: blur(5px);
     transform: rotate(1.5deg) scale(1.44);
+  }
+
+  .fog-plane-c {
+    top: 62vh;
+    left: -135vw;
+    width: 455vw;
+    height: 108vh;
+    opacity: 0.5;
+    filter: blur(4px);
+    transform: rotate(-1.8deg) scale(1.36);
+  }
+
+  .fog-plane-d {
+    top: 82vh;
+    left: -160vw;
+    width: 505vw;
+    height: 102vh;
+    opacity: 0.4;
+    filter: blur(7px);
+    transform: rotate(1.6deg) scale(1.44);
   }
 
   .fog-track img {
