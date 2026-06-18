@@ -1,5 +1,5 @@
-import ScrollExperience from "@/components/ScrollExperience";
+import LandingExperience from "@/components/LandingExperience";
 
 export default function Home() {
-  return <ScrollExperience />;
+  return <LandingExperience />;
 }

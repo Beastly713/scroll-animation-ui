@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Kuro Mori | Cinematic Scroll Experience",
-  description:
-    "A dark Japanese luxury editorial scroll experience with cinematic image transitions.",
+  title: "Cinematic Scroll Landing",
+  description: "Fog-based cinematic landing page scroll animation.",
 };
 
 export default function RootLayout({
@@ -13,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className="min-h-full bg-black text-stone-100">{children}</body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
 }
