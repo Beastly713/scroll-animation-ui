@@ -136,7 +136,7 @@ export default function LandingExperience() {
           <img
             ref={forestRef}
             className="forest-image"
-            src="/images/home_fc_img.webp"
+            src="/images/home_fv_img.webp"
             alt=""
             draggable={false}
           />
