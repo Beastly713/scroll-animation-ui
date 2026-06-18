@@ -17,6 +17,7 @@ export default function LandingExperience() {
   const titleRef = useRef<HTMLDivElement | null>(null);
   const archiveBgRef = useRef<HTMLDivElement | null>(null);
   const archiveImageRef = useRef<HTMLDivElement | null>(null);
+  const companyBgRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!rootRef.current || !worldRef.current || !forestRef.current) return;
@@ -43,16 +44,12 @@ export default function LandingExperience() {
         if (!world) return -window.innerHeight * 0.85;
 
         const rect = world.getBoundingClientRect();
-        const maxTravel = Math.max(
-          rect.height - window.innerHeight,
-          window.innerHeight * 0.85,
-        );
-
-        return -maxTravel;
+        return -Math.max(rect.height - window.innerHeight, window.innerHeight * 0.85);
       };
 
       gsap.set(worldRef.current, {
         y: 0,
+        opacity: 1,
         transformOrigin: "50% 0%",
       });
 
@@ -69,19 +66,22 @@ export default function LandingExperience() {
         y: 0,
       });
 
-      gsap.set(worldRef.current, {
-        opacity: 1,
-      });
-
       gsap.set(archiveBgRef.current, {
         opacity: 0,
         scale: 1.04,
       });
 
       gsap.set(archiveImageRef.current, {
+        xPercent: -50,
+        yPercent: -50,
         opacity: 0,
-        y: 48,
+        y: 42,
         scale: 0.94,
+      });
+
+      gsap.set(companyBgRef.current, {
+        opacity: 0,
+        scale: 1.05,
       });
 
       const tl = gsap.timeline({
@@ -99,7 +99,7 @@ export default function LandingExperience() {
         {
           y: getTravel,
           ease: "none",
-          duration: 1,
+          duration: 2.2,
         },
         0,
       )
@@ -108,7 +108,7 @@ export default function LandingExperience() {
           {
             opacity: 0.04,
             ease: "none",
-            duration: 0.75,
+            duration: 1.8,
           },
           0,
         )
@@ -117,9 +117,9 @@ export default function LandingExperience() {
           {
             opacity: 0.34,
             ease: "none",
-            duration: 0.7,
+            duration: 1.1,
           },
-          0.38,
+          1.05,
         )
         .to(
           titleRef.current,
@@ -127,9 +127,9 @@ export default function LandingExperience() {
             opacity: 0,
             y: -22,
             ease: "power2.out",
-            duration: 0.32,
+            duration: 0.45,
           },
-          0.12,
+          0.35,
         )
         .to(
           archiveBgRef.current,
@@ -137,27 +137,27 @@ export default function LandingExperience() {
             opacity: 1,
             scale: 1,
             ease: "power1.inOut",
-            duration: 0.68,
+            duration: 0.95,
           },
-          0.82,
+          2.0,
         )
         .to(
           worldRef.current,
           {
             opacity: 0,
             ease: "power1.inOut",
-            duration: 0.56,
+            duration: 0.85,
           },
-          0.98,
+          2.35,
         )
         .to(
           darkVeilRef.current,
           {
-            opacity: 0.18,
+            opacity: 0.16,
             ease: "none",
-            duration: 0.42,
+            duration: 0.7,
           },
-          1.18,
+          2.75,
         )
         .to(
           archiveImageRef.current,
@@ -166,14 +166,61 @@ export default function LandingExperience() {
             y: 0,
             scale: 1,
             ease: "power2.out",
-            duration: 0.56,
+            duration: 0.85,
           },
-          1.32,
+          3.05,
+        )
+        .to(
+          archiveImageRef.current,
+          {
+            opacity: 1,
+            ease: "none",
+            duration: 0.9,
+          },
+          3.9,
+        )
+        .to(
+          companyBgRef.current,
+          {
+            opacity: 1,
+            scale: 1,
+            ease: "power1.inOut",
+            duration: 1.05,
+          },
+          4.65,
+        )
+        .to(
+          archiveBgRef.current,
+          {
+            opacity: 0,
+            ease: "power1.inOut",
+            duration: 0.95,
+          },
+          4.75,
+        )
+        .to(
+          archiveImageRef.current,
+          {
+            opacity: 0,
+            y: -34,
+            scale: 0.96,
+            ease: "power2.inOut",
+            duration: 0.8,
+          },
+          4.82,
+        )
+        .to(
+          darkVeilRef.current,
+          {
+            opacity: 0.08,
+            ease: "none",
+            duration: 0.9,
+          },
+          4.78,
         );
     }, rootRef);
 
     const refresh = () => ScrollTrigger.refresh();
-
     window.addEventListener("resize", refresh);
 
     if (forestRef.current.complete) {
@@ -246,6 +293,7 @@ export default function LandingExperience() {
         </div>
 
         <div ref={archiveBgRef} className="archive-transition-bg" />
+        <div ref={companyBgRef} className="company-transition-bg" />
 
         <div ref={archiveImageRef} className="archive-scroll-image">
           {/* eslint-disable-next-line @next/next/no-img-element */}
