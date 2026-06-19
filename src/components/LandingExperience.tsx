@@ -19,6 +19,7 @@ export default function LandingExperience() {
   const archiveImageRef = useRef<HTMLDivElement | null>(null);
   const companyWorldRef = useRef<HTMLDivElement | null>(null);
   const companyImageRef = useRef<HTMLImageElement | null>(null);
+  const companyRainVideoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     if (!rootRef.current || !worldRef.current || !forestRef.current) return;
@@ -93,6 +94,10 @@ export default function LandingExperience() {
         y: 0,
         scale: 1.02,
         transformOrigin: "50% 0%",
+      });
+
+      gsap.set(companyRainVideoRef.current, {
+        opacity: 0,
       });
 
       const tl = gsap.timeline({
@@ -201,6 +206,15 @@ export default function LandingExperience() {
           4.6,
         )
         .to(
+          companyRainVideoRef.current,
+          {
+            opacity: 0.42,
+            ease: "power1.inOut",
+            duration: 0.95,
+          },
+          4.72,
+        )
+        .to(
           archiveBgRef.current,
           {
             opacity: 0,
@@ -237,6 +251,15 @@ export default function LandingExperience() {
             duration: 1.65,
           },
           5.15,
+        )
+        .to(
+          companyRainVideoRef.current,
+          {
+            opacity: 0.3,
+            ease: "none",
+            duration: 1.35,
+          },
+          5.45,
         );
     }, rootRef);
 
@@ -323,6 +346,18 @@ export default function LandingExperience() {
               src="/images/home_company_img.webp"
               alt=""
               draggable={false}
+            />
+
+            <video
+              ref={companyRainVideoRef}
+              className="company-rain-video"
+              src="/videos/distant-rain.webm"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-hidden="true"
             />
           </div>
         </div>
