@@ -208,11 +208,11 @@ export default function LandingExperience() {
         .to(
           companyRainVideoRef.current,
           {
-            opacity: 0.42,
-            ease: "power1.inOut",
-            duration: 0.95,
+            opacity: 0.74,
+            ease: "power1.out",
+            duration: 0.42,
           },
-          4.72,
+          4.5,
         )
         .to(
           archiveBgRef.current,
@@ -255,7 +255,7 @@ export default function LandingExperience() {
         .to(
           companyRainVideoRef.current,
           {
-            opacity: 0.3,
+            opacity: 0.56,
             ease: "none",
             duration: 1.35,
           },
