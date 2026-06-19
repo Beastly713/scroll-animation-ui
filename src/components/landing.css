@@ -133,7 +133,7 @@ body {
   pointer-events: none;
   user-select: none;
   mix-blend-mode: screen;
-  filter: brightness(1.45) contrast(1.22) saturate(0.9);
+  filter: brightness(1.16) contrast(1.08) saturate(0.82);
   will-change: opacity;
 }
 
@@ -503,7 +503,7 @@ body {
 
   .company-rain-video {
     object-position: center center;
-    filter: brightness(1.36) contrast(1.16) saturate(0.88);
+    filter: brightness(1.12) contrast(1.04) saturate(0.82);
   }
 
   .fog-plane-a {
