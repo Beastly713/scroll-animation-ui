@@ -19,9 +19,6 @@ export default function LandingExperience() {
   const archiveImageRef = useRef<HTMLDivElement | null>(null);
   const companyWorldRef = useRef<HTMLDivElement | null>(null);
   const companyImageRef = useRef<HTMLImageElement | null>(null);
-  const archiveWeatherRef = useRef<HTMLDivElement | null>(null);
-  const lightningRef = useRef<HTMLDivElement | null>(null);
-  const companyRainRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!rootRef.current || !worldRef.current || !forestRef.current) return;
@@ -98,18 +95,6 @@ export default function LandingExperience() {
         transformOrigin: "50% 0%",
       });
 
-      gsap.set(archiveWeatherRef.current, {
-        opacity: 0,
-      });
-
-      gsap.set(lightningRef.current, {
-        opacity: 0,
-      });
-
-      gsap.set(companyRainRef.current, {
-        opacity: 0,
-      });
-
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: rootRef.current,
@@ -168,24 +153,6 @@ export default function LandingExperience() {
           2.0,
         )
         .to(
-          archiveWeatherRef.current,
-          {
-            opacity: 0.78,
-            ease: "power1.inOut",
-            duration: 0.72,
-          },
-          2.06,
-        )
-        .to(
-          lightningRef.current,
-          {
-            opacity: 0.72,
-            ease: "power1.inOut",
-            duration: 0.48,
-          },
-          2.18,
-        )
-        .to(
           worldRef.current,
           {
             opacity: 0,
@@ -224,24 +191,6 @@ export default function LandingExperience() {
           3.9,
         )
         .to(
-          companyRainRef.current,
-          {
-            opacity: 0.58,
-            ease: "power1.inOut",
-            duration: 0.9,
-          },
-          4.5,
-        )
-        .to(
-          lightningRef.current,
-          {
-            opacity: 0,
-            ease: "power1.inOut",
-            duration: 0.62,
-          },
-          4.42,
-        )
-        .to(
           companyWorldRef.current,
           {
             opacity: 1,
@@ -250,15 +199,6 @@ export default function LandingExperience() {
             duration: 0.95,
           },
           4.6,
-        )
-        .to(
-          archiveWeatherRef.current,
-          {
-            opacity: 0,
-            ease: "power1.inOut",
-            duration: 0.95,
-          },
-          4.72,
         )
         .to(
           archiveBgRef.current,
@@ -297,15 +237,6 @@ export default function LandingExperience() {
             duration: 1.65,
           },
           5.15,
-        )
-        .to(
-          companyRainRef.current,
-          {
-            opacity: 0.46,
-            ease: "none",
-            duration: 1.4,
-          },
-          5.3,
         );
     }, rootRef);
 
@@ -383,11 +314,6 @@ export default function LandingExperience() {
         </div>
 
         <div ref={archiveBgRef} className="archive-transition-bg" />
-        <div ref={archiveWeatherRef} className="archive-weather-layer" aria-hidden="true">
-          <div className="rain-layer rain-layer-storm" />
-          <div className="rain-layer rain-layer-storm rain-layer-storm-depth" />
-          <div ref={lightningRef} className="lightning-layer" />
-        </div>
         <div className="company-window">
           <div ref={companyWorldRef} className="company-world">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -398,10 +324,6 @@ export default function LandingExperience() {
               alt=""
               draggable={false}
             />
-            <div ref={companyRainRef} className="company-rain-layer" aria-hidden="true">
-              <div className="rain-layer rain-layer-calm" />
-              <div className="rain-layer rain-layer-calm rain-layer-calm-depth" />
-            </div>
           </div>
         </div>
 
