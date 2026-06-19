@@ -137,6 +137,11 @@ body {
   will-change: opacity;
 }
 
+.company-rain-video-mirrored {
+  transform: scaleX(-1);
+  transform-origin: center center;
+}
+
 .company-world::before {
   position: absolute;
   inset: 0;

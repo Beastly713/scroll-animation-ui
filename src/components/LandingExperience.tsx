@@ -20,9 +20,32 @@ export default function LandingExperience() {
   const companyWorldRef = useRef<HTMLDivElement | null>(null);
   const companyImageRef = useRef<HTMLImageElement | null>(null);
   const companyRainVideoRef = useRef<HTMLVideoElement | null>(null);
+  const companyRainVideoTwoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     if (!rootRef.current || !worldRef.current || !forestRef.current) return;
+
+    const offsetSecondRainVideo = () => {
+      const video = companyRainVideoTwoRef.current;
+      if (!video) return;
+
+      const fallbackOffsetSeconds = 7.5;
+      const safeOffset =
+        Number.isFinite(video.duration) && video.duration > fallbackOffsetSeconds + 0.5
+          ? fallbackOffsetSeconds
+          : Math.max(0, Math.floor((video.duration || 15) * 0.5));
+
+      try {
+        video.currentTime = safeOffset;
+      } catch {
+        // Browser may reject currentTime before metadata is ready.
+      }
+
+      const playPromise = video.play();
+      if (playPromise) {
+        void playPromise.catch(() => undefined);
+      }
+    };
 
     const lenis = new Lenis({
       duration: 1.45,
@@ -96,7 +119,12 @@ export default function LandingExperience() {
         transformOrigin: "50% 0%",
       });
 
-      gsap.set(companyRainVideoRef.current, {
+      const companyRainVideos = [
+        companyRainVideoRef.current,
+        companyRainVideoTwoRef.current,
+      ].filter((video): video is HTMLVideoElement => Boolean(video));
+
+      gsap.set(companyRainVideos, {
         opacity: 0,
       });
 
@@ -206,7 +234,7 @@ export default function LandingExperience() {
           4.6,
         )
         .to(
-          companyRainVideoRef.current,
+          companyRainVideos,
           {
             opacity: 0.42,
             ease: "power1.inOut",
@@ -253,7 +281,7 @@ export default function LandingExperience() {
           5.15,
         )
         .to(
-          companyRainVideoRef.current,
+          companyRainVideos,
           {
             opacity: 0.3,
             ease: "none",
@@ -273,8 +301,21 @@ export default function LandingExperience() {
       companyImageRef.current?.addEventListener("load", refresh, { once: true });
     }
 
+    const secondRainVideo = companyRainVideoTwoRef.current;
+
+    if (secondRainVideo) {
+      if (secondRainVideo.readyState >= 1) {
+        offsetSecondRainVideo();
+      } else {
+        secondRainVideo.addEventListener("loadedmetadata", offsetSecondRainVideo, {
+          once: true,
+        });
+      }
+    }
+
     return () => {
       window.removeEventListener("resize", refresh);
+      secondRainVideo?.removeEventListener("loadedmetadata", offsetSecondRainVideo);
       ctx.revert();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       gsap.ticker.remove(tick);
@@ -352,6 +393,17 @@ export default function LandingExperience() {
               ref={companyRainVideoRef}
               className="company-rain-video"
               src="/videos/distant-rain.webm"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-hidden="true"
+            />
+            <video
+              ref={companyRainVideoTwoRef}
+              className="company-rain-video company-rain-video-mirrored"
+              src="/videos/distant-rain-2.webm"
               autoPlay
               muted
               loop
