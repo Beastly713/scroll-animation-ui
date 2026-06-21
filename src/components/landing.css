@@ -566,3 +566,255 @@ body {
     transform: rotate(1.5deg) scale(1.32);
   }
 }
+
+.intro-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  pointer-events: auto;
+  background: #000;
+  color: rgba(235, 231, 218, 0.88);
+  isolation: isolate;
+}
+
+.intro-gate__veil {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 51%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(35, 35, 32, 0.24), transparent 34%),
+    linear-gradient(180deg, #000 0%, #020202 46%, #000 100%);
+  will-change: transform;
+}
+
+.intro-gate__veil--left {
+  left: 0;
+  transform-origin: left center;
+}
+
+.intro-gate__veil--right {
+  right: 0;
+  transform-origin: right center;
+}
+
+.intro-gate__grain {
+  position: absolute;
+  inset: -20%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.28;
+  background:
+    radial-gradient(circle at 35% 42%, rgba(255, 255, 255, 0.04), transparent 18%),
+    radial-gradient(circle at 62% 54%, rgba(255, 255, 255, 0.032), transparent 22%),
+    radial-gradient(circle at 48% 48%, rgba(91, 87, 76, 0.1), transparent 34%);
+  filter: blur(20px);
+  transform: scale(1.04);
+  animation: intro-grain-drift 4.8s ease-in-out infinite alternate;
+}
+
+.intro-gate__content {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.intro-gate__quote {
+  margin: 0;
+  font-family:
+    "Zen Old Mincho",
+    "Noto Serif JP",
+    "Hiragino Mincho ProN",
+    "Yu Mincho",
+    serif;
+  font-size: clamp(2rem, 4vw, 4.2rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: rgba(238, 234, 220, 0.9);
+  letter-spacing: 0.14em;
+  text-shadow:
+    0 0 22px rgba(230, 222, 198, 0.1),
+    0 0 54px rgba(255, 255, 255, 0.055);
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(10px);
+  animation: intro-quote-arrive 1.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.intro-gate__counter {
+  position: absolute;
+  bottom: clamp(2.4rem, 6vh, 4.6rem);
+  left: 50%;
+  z-index: 4;
+  font-family:
+    var(--font-geist-mono),
+    "Geist Mono",
+    "IBM Plex Mono",
+    monospace;
+  font-size: clamp(0.86rem, 1.15vw, 1.08rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+  line-height: 1;
+  color: rgba(226, 222, 207, 0.72);
+  letter-spacing: 0.24em;
+  text-shadow: 0 0 24px rgba(226, 222, 207, 0.08);
+  opacity: 0;
+  transform: translateX(-50%);
+  animation: intro-counter-arrive 0.9s ease-out 0.34s forwards;
+}
+
+.intro-gate--exiting {
+  pointer-events: none;
+  background: transparent;
+}
+
+.intro-gate--exiting .intro-gate__quote {
+  animation: intro-quote-depart 0.52s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.intro-gate--exiting .intro-gate__counter {
+  animation: intro-counter-depart 0.38s ease-out forwards;
+}
+
+.intro-gate--exiting .intro-gate__grain {
+  animation: intro-grain-release 0.95s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.intro-gate--exiting .intro-gate__veil--left {
+  animation: intro-veil-left-release 0.95s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.intro-gate--exiting .intro-gate__veil--right {
+  animation: intro-veil-right-release 0.95s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+@keyframes intro-quote-arrive {
+  0% {
+    opacity: 0;
+    filter: blur(14px);
+    transform: translateY(14px) scale(0.985);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes intro-counter-arrive {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes intro-quote-depart {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(18px);
+    transform: translateY(-8px) scale(0.982);
+  }
+}
+
+@keyframes intro-counter-depart {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+}
+
+@keyframes intro-veil-left-release {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-104%);
+  }
+}
+
+@keyframes intro-veil-right-release {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(104%);
+  }
+}
+
+@keyframes intro-grain-drift {
+  0% {
+    opacity: 0.2;
+    transform: translate3d(-1%, 0, 0) scale(1.04);
+  }
+
+  100% {
+    opacity: 0.34;
+    transform: translate3d(1%, -1%, 0) scale(1.08);
+  }
+}
+
+@keyframes intro-grain-release {
+  0% {
+    opacity: 0.3;
+    filter: blur(20px);
+    transform: scale(1.04);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(34px);
+    transform: scale(1.24);
+  }
+}
+
+@media (max-width: 768px) {
+  .intro-gate__quote {
+    font-size: clamp(1.55rem, 7vw, 2.5rem);
+    letter-spacing: 0.1em;
+  }
+
+  .intro-gate__counter {
+    bottom: 2rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.2em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-gate__grain,
+  .intro-gate__quote,
+  .intro-gate__counter,
+  .intro-gate--exiting .intro-gate__grain,
+  .intro-gate--exiting .intro-gate__quote,
+  .intro-gate--exiting .intro-gate__counter,
+  .intro-gate--exiting .intro-gate__veil--left,
+  .intro-gate--exiting .intro-gate__veil--right {
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+  }
+}
