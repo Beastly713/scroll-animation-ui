@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { IntroGate } from "./IntroGate";
+import { SceneOneOverlay } from "./SceneOneOverlay";
 import "./landing.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -428,7 +429,9 @@ export default function LandingExperience() {
         <div ref={toneRef} className="tone-wash" />
         <div ref={darkVeilRef} className="dark-veil" />
 
-        <div ref={titleRef} className="landing-title" />
+        <div ref={titleRef} className="landing-title">
+          <SceneOneOverlay />
+        </div>
       </section>
       </main>
 
