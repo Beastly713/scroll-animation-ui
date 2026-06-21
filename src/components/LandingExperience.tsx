@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import { IntroGate } from "./IntroGate";
 import "./landing.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -324,7 +325,8 @@ export default function LandingExperience() {
   }, []);
 
   return (
-    <main ref={rootRef} className="landing-scroll">
+    <>
+      <main ref={rootRef} className="landing-scroll">
       <section className="landing-stage">
         <div className="forest-window">
           <div ref={worldRef} className="forest-world">
@@ -428,6 +430,16 @@ export default function LandingExperience() {
 
         <div ref={titleRef} className="landing-title" />
       </section>
-    </main>
+      </main>
+
+      <IntroGate
+        onComplete={() => {
+          window.scrollTo(0, 0);
+          requestAnimationFrame(() => {
+            ScrollTrigger.refresh();
+          });
+        }}
+      />
+    </>
   );
 }

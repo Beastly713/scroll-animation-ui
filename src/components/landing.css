@@ -566,3 +566,247 @@ body {
     transform: rotate(1.5deg) scale(1.32);
   }
 }
+
+.intro-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: block;
+  overflow: hidden;
+  color: #f0ead8;
+  pointer-events: auto;
+  background: #000;
+  opacity: 1;
+  isolation: isolate;
+  filter: blur(0);
+  transform: scale(1);
+  will-change: opacity, filter, transform;
+}
+
+.intro-gate__void {
+  position: absolute;
+  inset: -14%;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(77, 73, 58, 0.16), transparent 28%),
+    radial-gradient(circle at 50% 50%, rgba(242, 231, 202, 0.035), transparent 16%),
+    linear-gradient(180deg, #000 0%, #020202 48%, #000 100%);
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+  animation: intro-void-breathe 2.8s ease-in-out infinite alternate;
+  will-change: opacity, transform;
+}
+
+.intro-gate__quote-shell {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  display: flex;
+  width: min(94vw, 1600px);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.intro-gate__quote {
+  margin: 0;
+  font-family:
+    "Zen Old Mincho",
+    "Hiragino Mincho ProN",
+    "Yu Mincho",
+    "Noto Serif JP",
+    serif;
+  font-size: clamp(4.5rem, 7vw, 8.6rem);
+  font-weight: 500;
+  line-height: 1.12;
+  color: rgba(244, 238, 219, 0.96);
+  letter-spacing: 0.1em;
+  text-shadow:
+    0 0 26px rgba(237, 226, 195, 0.12),
+    0 0 80px rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
+  opacity: 0;
+  filter: blur(12px);
+  transform: translate3d(0, 14px, 0) scale(0.985);
+  animation: intro-quote-enter 680ms cubic-bezier(0.22, 1, 0.36, 1) 140ms forwards;
+  will-change: opacity, filter, transform;
+}
+
+.intro-gate__counter {
+  position: absolute;
+  bottom: clamp(4.2rem, 9vh, 7.2rem);
+  left: 50%;
+  z-index: 3;
+  width: 4ch;
+  font-family:
+    "IBM Plex Mono",
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  font-size: clamp(4rem, 5.8vw, 7.2rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+  line-height: 1;
+  color: rgba(232, 225, 203, 0.86);
+  text-align: center;
+  letter-spacing: 0.02em;
+  text-shadow:
+    0 0 24px rgba(237, 226, 195, 0.1),
+    0 0 72px rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  filter: blur(8px);
+  transform: translate3d(-50%, 0, 0);
+  animation: intro-counter-enter 420ms ease-out 220ms forwards;
+  will-change: opacity, filter, transform;
+}
+
+.intro-gate--exiting {
+  pointer-events: none;
+  animation: intro-gate-dissolve 820ms cubic-bezier(0.5, 0, 0.16, 1) forwards;
+}
+
+.intro-gate--exiting .intro-gate__void {
+  animation: intro-void-release 820ms cubic-bezier(0.5, 0, 0.16, 1) forwards;
+}
+
+.intro-gate--exiting .intro-gate__quote {
+  animation: intro-quote-exit 300ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.intro-gate--exiting .intro-gate__counter {
+  animation: intro-counter-exit 260ms ease-out forwards;
+}
+
+@keyframes intro-quote-enter {
+  0% {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translate3d(0, 14px, 0) scale(0.985);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes intro-counter-enter {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translate3d(-50%, 10px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes intro-quote-exit {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(18px);
+    transform: translate3d(0, -10px, 0) scale(0.985);
+  }
+}
+
+@keyframes intro-counter-exit {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(14px);
+    transform: translate3d(-50%, 12px, 0);
+  }
+}
+
+@keyframes intro-gate-dissolve {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+
+  45% {
+    opacity: 0.72;
+    filter: blur(2px);
+    transform: scale(1.004);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(18px);
+    transform: scale(1.018);
+  }
+}
+
+@keyframes intro-void-breathe {
+  0% {
+    opacity: 0.78;
+    transform: translate3d(-0.4%, 0, 0) scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0.4%, -0.4%, 0) scale(1.035);
+  }
+}
+
+@keyframes intro-void-release {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(28px);
+    transform: scale(1.12);
+  }
+}
+
+@media (max-width: 768px) {
+  .intro-gate__quote {
+    font-size: clamp(2.45rem, 10vw, 4rem);
+    letter-spacing: 0.07em;
+    white-space: normal;
+  }
+
+  .intro-gate__counter {
+    bottom: 3.2rem;
+    font-size: clamp(3.2rem, 14vw, 5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-gate,
+  .intro-gate__void,
+  .intro-gate__quote,
+  .intro-gate__counter,
+  .intro-gate--exiting,
+  .intro-gate--exiting .intro-gate__void,
+  .intro-gate--exiting .intro-gate__quote,
+  .intro-gate--exiting .intro-gate__counter {
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+  }
+}
