@@ -9,9 +9,9 @@ type IntroGateProps = {
 };
 
 const INITIAL_HOLD_MS = 250;
-const COUNTER_STEP_MS = 31;
-const HOLD_AT_100_MS = 600;
-const EXIT_DURATION_MS = 1050;
+const COUNTER_STEP_MS = 27;
+const HOLD_AT_100_MS = 1400;
+const EXIT_DURATION_MS = 1800;
 
 const SCROLL_KEYS = new Set([
   "ArrowDown",

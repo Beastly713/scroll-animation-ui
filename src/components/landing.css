@@ -631,7 +631,7 @@ body {
   clip-path: inset(0 100% 0 0);
   filter: blur(3px);
   transform: translate3d(0, 2px, 0);
-  animation: intro-quote-reveal 2600ms cubic-bezier(0.25, 1, 0.5, 1) 320ms forwards;
+  animation: intro-quote-reveal 3200ms cubic-bezier(0.25, 1, 0.5, 1) 420ms forwards;
   will-change: opacity, clip-path, filter, transform;
 }
 
@@ -665,19 +665,19 @@ body {
 
 .intro-gate--exiting {
   pointer-events: none;
-  animation: intro-gate-calm-release 1050ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: intro-gate-calm-release 1800ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .intro-gate--exiting .intro-gate__void {
-  animation: intro-void-release 1050ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: intro-void-release 1800ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .intro-gate--exiting .intro-gate__quote {
-  animation: intro-quote-exit 720ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: intro-quote-exit 1050ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .intro-gate--exiting .intro-gate__counter {
-  animation: intro-counter-exit 620ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: intro-counter-exit 900ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes intro-quote-reveal {
@@ -748,14 +748,19 @@ body {
     filter: blur(0);
   }
 
-  35% {
-    opacity: 0.96;
+  34% {
+    opacity: 1;
     filter: blur(0);
+  }
+
+  68% {
+    opacity: 0.58;
+    filter: blur(3px);
   }
 
   100% {
     opacity: 0;
-    filter: blur(10px);
+    filter: blur(12px);
   }
 }
 
@@ -778,10 +783,16 @@ body {
     transform: scale(1);
   }
 
+  38% {
+    opacity: 0.76;
+    filter: blur(2px);
+    transform: scale(1.01);
+  }
+
   100% {
     opacity: 0;
-    filter: blur(18px);
-    transform: scale(1.045);
+    filter: blur(22px);
+    transform: scale(1.06);
   }
 }
 
