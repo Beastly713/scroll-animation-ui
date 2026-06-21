@@ -8,9 +8,10 @@ type IntroGateProps = {
   onComplete?: () => void;
 };
 
-const INITIAL_HOLD_MS = 180;
-const HOLD_AT_100_MS = 220;
-const EXIT_DURATION_MS = 820;
+const INITIAL_HOLD_MS = 250;
+const COUNTER_STEP_MS = 31;
+const HOLD_AT_100_MS = 600;
+const EXIT_DURATION_MS = 1050;
 
 const SCROLL_KEYS = new Set([
   "ArrowDown",
@@ -21,12 +22,6 @@ const SCROLL_KEYS = new Set([
   "End",
   " ",
 ]);
-
-function getCounterDelay(current: number) {
-  if (current < 70) return 24;
-  if (current < 90) return 34;
-  return 48;
-}
 
 export function IntroGate({ onComplete }: IntroGateProps) {
   const [count, setCount] = useState(0);
@@ -55,24 +50,20 @@ export function IntroGate({ onComplete }: IntroGateProps) {
       passive: false,
       capture: true,
     });
+
     window.addEventListener("touchmove", preventScroll, {
       passive: false,
       capture: true,
     });
+
     window.addEventListener("keydown", preventKeyboardScroll, {
       capture: true,
     });
 
     return () => {
-      window.removeEventListener("wheel", preventScroll, {
-        capture: true,
-      });
-      window.removeEventListener("touchmove", preventScroll, {
-        capture: true,
-      });
-      window.removeEventListener("keydown", preventKeyboardScroll, {
-        capture: true,
-      });
+      window.removeEventListener("wheel", preventScroll, true);
+      window.removeEventListener("touchmove", preventScroll, true);
+      window.removeEventListener("keydown", preventKeyboardScroll, true);
     };
   }, []);
 
@@ -96,7 +87,7 @@ export function IntroGate({ onComplete }: IntroGateProps) {
           setCount(next);
           tick(next);
         },
-        current === 0 ? INITIAL_HOLD_MS : getCounterDelay(current),
+        current === 0 ? INITIAL_HOLD_MS : COUNTER_STEP_MS,
       );
     };
 
@@ -133,7 +124,7 @@ export function IntroGate({ onComplete }: IntroGateProps) {
       <div className="intro-gate__void" aria-hidden="true" />
 
       <div className="intro-gate__quote-shell">
-        <p className="intro-gate__quote" lang="ja">
+        <p className="intro-gate__quote" lang="ja" translate="no">
           時を待つな。時を結べ。
         </p>
       </div>
