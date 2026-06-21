@@ -426,27 +426,7 @@ export default function LandingExperience() {
         <div ref={toneRef} className="tone-wash" />
         <div ref={darkVeilRef} className="dark-veil" />
 
-        <header className="landing-chrome">
-          <div className="brand">
-            <div className="brand-mark">景</div>
-            <div className="brand-name">IZANAMI</div>
-          </div>
-
-          <nav className="top-nav">
-            <span>EN</span>
-            <span>JA</span>
-            <span>MENU</span>
-          </nav>
-        </header>
-
-        <div ref={titleRef} className="landing-title">
-          Remember who you are
-        </div>
-
-        <div className="landing-meta">
-          <span>©2026</span>
-          <span>SCROLL</span>
-        </div>
+        <div ref={titleRef} className="landing-title" />
       </section>
     </main>
   );
