@@ -575,17 +575,43 @@ body {
   overflow: hidden;
   color: #efe8d4;
   pointer-events: auto;
+  background: transparent;
+  isolation: isolate;
+  will-change: opacity;
+}
+
+.intro-gate::before {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  content: "";
+  pointer-events: none;
   background: #030301;
   opacity: 1;
-  isolation: isolate;
-  filter: blur(0);
   will-change: opacity, filter;
+}
+
+.intro-gate__mist-bridge {
+  position: absolute;
+  inset: -8%;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.34) 46%, rgba(0, 0, 0, 0.68) 100%),
+    radial-gradient(circle at 35% 48%, rgba(181, 190, 171, 0.1), transparent 28%),
+    url("/images/home_fv_img.webp");
+  background-position: center top;
+  background-size: cover;
+  opacity: 0;
+  filter: brightness(0.18) contrast(0.92) saturate(0.55) blur(18px);
+  transform: scale(1.045);
+  will-change: opacity, filter, transform;
 }
 
 .intro-gate__void {
   position: absolute;
   inset: -12%;
-  z-index: 1;
+  z-index: 3;
   pointer-events: none;
   background:
     radial-gradient(circle at 30% 50%, rgba(210, 198, 160, 0.035), transparent 16%),
@@ -601,7 +627,7 @@ body {
   position: absolute;
   top: 50%;
   left: clamp(4.5rem, 17.5vw, 20rem);
-  z-index: 3;
+  z-index: 5;
   display: flex;
   width: min(68vw, 760px);
   align-items: center;
@@ -631,7 +657,7 @@ body {
   clip-path: inset(0 100% 0 0);
   filter: blur(3px);
   transform: translate3d(0, 2px, 0);
-  animation: intro-quote-reveal 3200ms cubic-bezier(0.25, 1, 0.5, 1) 420ms forwards;
+  animation: intro-quote-reveal 3600ms cubic-bezier(0.25, 1, 0.5, 1) 420ms forwards;
   will-change: opacity, clip-path, filter, transform;
 }
 
@@ -639,7 +665,7 @@ body {
   position: absolute;
   bottom: clamp(2.8rem, 7.4vh, 5.4rem);
   left: clamp(4.5rem, 17.5vw, 20rem);
-  z-index: 3;
+  z-index: 5;
   width: 4ch;
   font-family:
     "IBM Plex Mono",
@@ -665,19 +691,26 @@ body {
 
 .intro-gate--exiting {
   pointer-events: none;
-  animation: intro-gate-calm-release 1800ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.intro-gate--exiting::before {
+  animation: intro-black-release 3200ms cubic-bezier(0.45, 0, 0.18, 1) forwards;
+}
+
+.intro-gate--exiting .intro-gate__mist-bridge {
+  animation: intro-mist-bridge-release 3200ms cubic-bezier(0.45, 0, 0.18, 1) forwards;
 }
 
 .intro-gate--exiting .intro-gate__void {
-  animation: intro-void-release 1800ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: intro-void-release 2600ms cubic-bezier(0.45, 0, 0.18, 1) forwards;
 }
 
 .intro-gate--exiting .intro-gate__quote {
-  animation: intro-quote-exit 1050ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: intro-quote-exit 1100ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .intro-gate--exiting .intro-gate__counter {
-  animation: intro-counter-exit 900ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: intro-counter-exit 950ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes intro-quote-reveal {
@@ -742,25 +775,62 @@ body {
   }
 }
 
-@keyframes intro-gate-calm-release {
+@keyframes intro-black-release {
   0% {
     opacity: 1;
     filter: blur(0);
   }
 
-  34% {
+  22% {
     opacity: 1;
     filter: blur(0);
   }
 
-  68% {
-    opacity: 0.58;
-    filter: blur(3px);
+  56% {
+    opacity: 0.72;
+    filter: blur(2px);
+  }
+
+  82% {
+    opacity: 0.22;
+    filter: blur(8px);
   }
 
   100% {
     opacity: 0;
-    filter: blur(12px);
+    filter: blur(14px);
+  }
+}
+
+@keyframes intro-mist-bridge-release {
+  0% {
+    opacity: 0;
+    filter: brightness(0.16) contrast(0.92) saturate(0.55) blur(20px);
+    transform: scale(1.055);
+  }
+
+  24% {
+    opacity: 0.18;
+    filter: brightness(0.18) contrast(0.92) saturate(0.55) blur(18px);
+    transform: scale(1.05);
+  }
+
+  48% {
+    opacity: 0.72;
+    filter: brightness(0.24) contrast(0.94) saturate(0.58) blur(14px);
+    transform: scale(1.04);
+  }
+
+  72% {
+    opacity: 0.78;
+    filter: brightness(0.34) contrast(0.96) saturate(0.62) blur(9px);
+    transform: scale(1.025);
+  }
+
+  100% {
+    opacity: 0;
+    filter: brightness(0.7) contrast(1) saturate(0.75) blur(4px);
+    transform: scale(1.005);
   }
 }
 
@@ -783,16 +853,16 @@ body {
     transform: scale(1);
   }
 
-  38% {
-    opacity: 0.76;
-    filter: blur(2px);
-    transform: scale(1.01);
+  40% {
+    opacity: 0.68;
+    filter: blur(3px);
+    transform: scale(1.015);
   }
 
   100% {
     opacity: 0;
-    filter: blur(22px);
-    transform: scale(1.06);
+    filter: blur(24px);
+    transform: scale(1.075);
   }
 }
 
@@ -821,11 +891,13 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro-gate,
+  .intro-gate::before,
+  .intro-gate__mist-bridge,
   .intro-gate__void,
   .intro-gate__quote,
   .intro-gate__counter,
-  .intro-gate--exiting,
+  .intro-gate--exiting::before,
+  .intro-gate--exiting .intro-gate__mist-bridge,
   .intro-gate--exiting .intro-gate__void,
   .intro-gate--exiting .intro-gate__quote,
   .intro-gate--exiting .intro-gate__counter {

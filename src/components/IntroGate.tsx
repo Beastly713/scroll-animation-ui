@@ -10,8 +10,8 @@ type IntroGateProps = {
 
 const INITIAL_HOLD_MS = 250;
 const COUNTER_STEP_MS = 27;
-const HOLD_AT_100_MS = 1400;
-const EXIT_DURATION_MS = 1800;
+const HOLD_AT_100_MS = 1300;
+const EXIT_DURATION_MS = 3200;
 
 const SCROLL_KEYS = new Set([
   "ArrowDown",
@@ -121,6 +121,7 @@ export function IntroGate({ onComplete }: IntroGateProps) {
       className={`intro-gate${phase === "exiting" ? " intro-gate--exiting" : ""}`}
       aria-label="Opening sequence"
     >
+      <div className="intro-gate__mist-bridge" aria-hidden="true" />
       <div className="intro-gate__void" aria-hidden="true" />
 
       <div className="intro-gate__quote-shell">
