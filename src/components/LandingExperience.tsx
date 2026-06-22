@@ -112,9 +112,10 @@ export default function LandingExperience() {
       });
 
       gsap.set(sceneTwoLines, {
-        opacity: 0,
+        autoAlpha: 0,
+        visibility: "hidden",
         y: 24,
-        filter: "blur(12px)",
+        filter: "blur(9px)",
       });
 
       gsap.set(archiveBgRef.current, {
@@ -156,37 +157,79 @@ export default function LandingExperience() {
         },
       });
 
+      const SCENE_TWO_START = 2.18;
+      const SCENE_TWO_LINE_DURATION = 0.95;
+      const SCENE_TWO_LINE_STEP = 1.08;
+      const SCENE_TWO_AFTER_PAUSE = 0.32;
+
+      const sceneTwoEnd =
+        SCENE_TWO_START +
+        Math.max(sceneTwoLines.length - 1, 0) * SCENE_TWO_LINE_STEP +
+        SCENE_TWO_LINE_DURATION;
+
+      const ARCHITECTURE_ORIGINAL_START = 3.05;
+      const ARCHITECTURE_NEW_START = sceneTwoEnd + SCENE_TWO_AFTER_PAUSE;
+      const DOWNSTREAM_SHIFT = ARCHITECTURE_NEW_START - ARCHITECTURE_ORIGINAL_START;
+
+      const shifted = (position: number) => position + DOWNSTREAM_SHIFT;
+
       const addSceneTwoLine = (line: HTMLElement, start: number) => {
-        tl.to(
-          line,
+        tl.set(
+          sceneTwoLines,
           {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)",
-            ease: "power2.out",
-            duration: 0.16,
+            autoAlpha: 0,
+            visibility: "hidden",
           },
-          start,
+          start - 0.001,
         )
-          .to(
+          .set(
             line,
             {
-              opacity: 1,
-              ease: "none",
-              duration: 0.12,
+              autoAlpha: 0,
+              visibility: "visible",
+              y: 24,
+              filter: "blur(9px)",
             },
-            start + 0.16,
+            start,
           )
           .to(
             line,
             {
-              opacity: 0,
-              y: -18,
-              filter: "blur(12px)",
-              ease: "power2.inOut",
-              duration: 0.18,
+              autoAlpha: 1,
+              y: 0,
+              filter: "blur(0px)",
+              ease: "power2.out",
+              duration: 0.26,
             },
-            start + 0.34,
+            start,
+          )
+          .to(
+            line,
+            {
+              autoAlpha: 1,
+              ease: "none",
+              duration: 0.42,
+            },
+            start + 0.26,
+          )
+          .to(
+            line,
+            {
+              autoAlpha: 0,
+              y: -18,
+              filter: "blur(9px)",
+              ease: "power2.inOut",
+              duration: 0.27,
+            },
+            start + 0.68,
+          )
+          .set(
+            line,
+            {
+              autoAlpha: 0,
+              visibility: "hidden",
+            },
+            start + SCENE_TWO_LINE_DURATION,
           );
       };
 
@@ -229,7 +272,7 @@ export default function LandingExperience() {
         );
 
       sceneTwoLines.forEach((line, index) => {
-        addSceneTwoLine(line, 2.06 + index * 0.19);
+        addSceneTwoLine(line, SCENE_TWO_START + index * SCENE_TWO_LINE_STEP);
       });
 
       tl.to(
@@ -269,7 +312,7 @@ export default function LandingExperience() {
             ease: "power2.out",
             duration: 0.85,
           },
-          3.05,
+          shifted(3.05),
         )
         .to(
           archiveImageRef.current,
@@ -278,7 +321,7 @@ export default function LandingExperience() {
             ease: "none",
             duration: 0.9,
           },
-          3.9,
+          shifted(3.9),
         )
         .to(
           companyWorldRef.current,
@@ -288,7 +331,7 @@ export default function LandingExperience() {
             ease: "power1.inOut",
             duration: 0.95,
           },
-          4.6,
+          shifted(4.6),
         )
         .to(
           companyRainVideos,
@@ -297,7 +340,7 @@ export default function LandingExperience() {
             ease: "power1.inOut",
             duration: 0.95,
           },
-          4.72,
+          shifted(4.72),
         )
         .to(
           archiveBgRef.current,
@@ -306,7 +349,7 @@ export default function LandingExperience() {
             ease: "power1.inOut",
             duration: 0.95,
           },
-          4.72,
+          shifted(4.72),
         )
         .to(
           archiveImageRef.current,
@@ -317,7 +360,7 @@ export default function LandingExperience() {
             ease: "power2.inOut",
             duration: 0.78,
           },
-          4.78,
+          shifted(4.78),
         )
         .to(
           darkVeilRef.current,
@@ -326,7 +369,7 @@ export default function LandingExperience() {
             ease: "none",
             duration: 0.85,
           },
-          4.76,
+          shifted(4.76),
         )
         .to(
           companyWorldRef.current,
@@ -335,7 +378,7 @@ export default function LandingExperience() {
             ease: "none",
             duration: 1.65,
           },
-          5.15,
+          shifted(5.15),
         )
         .to(
           companyRainVideos,
@@ -344,7 +387,7 @@ export default function LandingExperience() {
             ease: "none",
             duration: 1.35,
           },
-          5.45,
+          shifted(5.45),
         );
     }, rootRef);
 
