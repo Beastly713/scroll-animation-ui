@@ -632,6 +632,65 @@ body {
   }
 }
 
+.scene-two-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  overflow: hidden;
+  color: rgba(219, 178, 99, 0.94);
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.scene-two-principles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.scene-two-principle {
+  position: absolute;
+  top: 47%;
+  left: clamp(3.2rem, 11vw, 13rem);
+  width: min(46vw, 680px);
+  margin: 0;
+  transform: translate3d(0, -50%, 0);
+  will-change: opacity, transform, filter;
+}
+
+.scene-two-principle__index {
+  margin: 0 0 clamp(0.72rem, 1.2vh, 1rem);
+  font-family:
+    "IBM Plex Mono",
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  font-size: clamp(0.86rem, 0.95vw, 1.08rem);
+  font-weight: 400;
+  line-height: 1;
+  color: rgba(190, 151, 78, 0.82);
+  letter-spacing: 0.28em;
+  text-shadow:
+    0 2px 18px rgba(0, 0, 0, 0.56),
+    0 0 26px rgba(196, 145, 63, 0.1);
+}
+
+.scene-two-principle__text {
+  margin: 0;
+  font-family: "EB Garamond", "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.35rem, 3.45vw, 4.45rem);
+  font-weight: 500;
+  line-height: 1.06;
+  color: rgba(222, 181, 98, 0.95);
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+  text-shadow:
+    0 3px 24px rgba(0, 0, 0, 0.66),
+    0 0 32px rgba(198, 145, 61, 0.14),
+    0 0 2px rgba(238, 206, 138, 0.18);
+}
+
 .landing-meta {
   position: fixed;
   z-index: 10;
@@ -1088,6 +1147,24 @@ body {
     bottom: 1.5rem;
     font-size: 0.66rem;
   }
+
+  .scene-two-principle {
+    top: 48%;
+    right: 1.5rem;
+    left: 1.5rem;
+    width: auto;
+  }
+
+  .scene-two-principle__index {
+    margin-bottom: 0.65rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+  }
+
+  .scene-two-principle__text {
+    font-size: clamp(2rem, 9.2vw, 3.4rem);
+    line-height: 1.08;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1107,5 +1184,9 @@ body {
   .typewriter-cycle__cursor {
     animation-duration: 1ms;
     animation-iteration-count: 1;
+  }
+
+  .scene-two-principle {
+    transition: none;
   }
 }

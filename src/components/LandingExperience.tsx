@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { IntroGate } from "./IntroGate";
 import { SceneOneOverlay } from "./SceneOneOverlay";
+import { SceneTwoPrinciples } from "./SceneTwoPrinciples";
 import "./landing.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -17,6 +18,7 @@ export default function LandingExperience() {
   const toneRef = useRef<HTMLDivElement | null>(null);
   const darkVeilRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLDivElement | null>(null);
+  const sceneTwoRef = useRef<HTMLDivElement | null>(null);
   const archiveBgRef = useRef<HTMLDivElement | null>(null);
   const archiveImageRef = useRef<HTMLDivElement | null>(null);
   const companyWorldRef = useRef<HTMLDivElement | null>(null);
@@ -101,6 +103,20 @@ export default function LandingExperience() {
         y: 0,
       });
 
+      const sceneTwoLines = sceneTwoRef.current
+        ? Array.from(sceneTwoRef.current.querySelectorAll<HTMLElement>("[data-scene-two-line]"))
+        : [];
+
+      gsap.set(sceneTwoRef.current, {
+        opacity: 1,
+      });
+
+      gsap.set(sceneTwoLines, {
+        opacity: 0,
+        y: 24,
+        filter: "blur(12px)",
+      });
+
       gsap.set(archiveBgRef.current, {
         opacity: 0,
         scale: 1.04,
@@ -140,6 +156,40 @@ export default function LandingExperience() {
         },
       });
 
+      const addSceneTwoLine = (line: HTMLElement, start: number) => {
+        tl.to(
+          line,
+          {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            ease: "power2.out",
+            duration: 0.16,
+          },
+          start,
+        )
+          .to(
+            line,
+            {
+              opacity: 1,
+              ease: "none",
+              duration: 0.12,
+            },
+            start + 0.16,
+          )
+          .to(
+            line,
+            {
+              opacity: 0,
+              y: -18,
+              filter: "blur(12px)",
+              ease: "power2.inOut",
+              duration: 0.18,
+            },
+            start + 0.34,
+          );
+      };
+
       tl.to(
         worldRef.current,
         {
@@ -176,17 +226,22 @@ export default function LandingExperience() {
             duration: 0.45,
           },
           0.35,
-        )
-        .to(
-          archiveBgRef.current,
-          {
-            opacity: 1,
-            scale: 1,
-            ease: "power1.inOut",
-            duration: 0.95,
-          },
-          2.0,
-        )
+        );
+
+      sceneTwoLines.forEach((line, index) => {
+        addSceneTwoLine(line, 2.06 + index * 0.19);
+      });
+
+      tl.to(
+        archiveBgRef.current,
+        {
+          opacity: 1,
+          scale: 1,
+          ease: "power1.inOut",
+          duration: 0.95,
+        },
+        2.0,
+      )
         .to(
           worldRef.current,
           {
@@ -428,6 +483,10 @@ export default function LandingExperience() {
 
         <div ref={toneRef} className="tone-wash" />
         <div ref={darkVeilRef} className="dark-veil" />
+
+        <div ref={sceneTwoRef} className="scene-two-layer">
+          <SceneTwoPrinciples />
+        </div>
 
         <div ref={titleRef} className="landing-title">
           <SceneOneOverlay />
