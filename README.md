@@ -113,6 +113,8 @@ npm run build
 - Tailwind CSS `4`
 - TypeScript
 
+## Current work status : under progress
+
 ## Notes For Future Work
 
 This project uses a newer Next.js version with local docs in `node_modules/next/dist/docs/`. Before changing framework-specific APIs, routing conventions, image behavior, or config, read the relevant local guide first.
