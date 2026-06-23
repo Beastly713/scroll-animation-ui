@@ -1,13 +1,16 @@
-# Scroll Animation UI
+# Hiraishin Landing Sequence
 
-A small cinematic landing-page experiment built with Next.js, React, GSAP, and Lenis. The project is a single-page scroll scene: the viewport stays sticky while layered imagery, fog, an archive illustration, and a rainy company/forest scene transition over a long scroll distance.
+A small cinematic landing-page experiment for Hiraishin, a browser-to-browser file transfer concept. It is built with Next.js, React, GSAP, and Lenis as a single-page scroll sequence: the viewport stays sticky while an intro gate, branded title overlay, transfer-principle copy, layered forest imagery, fog, an archive illustration, and a rainy company/forest scene transition over a long scroll distance.
 
-The page currently has no visible copy, navigation, logo, or UI chrome. It is meant to read as a visual motion study rather than a content-heavy landing page.
+The page is intentionally sparse. It uses a few pieces of cinematic copy and motion states to explain the product idea without turning the first screen into a conventional content-heavy landing page.
 
 ## What It Does
 
+- Opens with a black intro gate containing a Japanese quote, numeric counter, and slow mist dissolve.
 - Holds one full-screen sticky stage while the document scrolls behind it.
-- Starts from a dark forest composition with animated fog layers.
+- Reveals a Scene 1 landing title for Hiraishin with a small typewriter cycle between English and Japanese naming.
+- Starts the scroll journey from a dark forest composition with animated fog layers.
+- Presents Scene 2 as a timed sequence of transfer principles, one line at a time.
 - Uses GSAP `ScrollTrigger` to scrub through the scene as the user scrolls.
 - Crossfades into an archive-style transition background and illustration.
 - Transitions again into a company/forest image with two overlaid looping rain videos.
@@ -27,11 +30,29 @@ src/app/globals.css
 
 src/components/LandingExperience.tsx
   Main client component. Owns refs, Lenis setup, GSAP timeline,
-  ScrollTrigger lifecycle, image/video load refreshes, and scene markup.
+  ScrollTrigger lifecycle, image/video load refreshes, scene orchestration,
+  and layer markup.
+
+src/components/IntroGate.tsx
+  Opening black-screen gate. Locks scroll during the intro, runs the quote,
+  counter, and mist-bridge exit, then refreshes the scroll scene.
+
+src/components/SceneOneOverlay.tsx
+  Scene 1 landing copy: Hiraishin naming, headline, technology line,
+  and scroll prompt.
+
+src/components/SceneTwoPrinciples.tsx
+  Scene 2 transfer-principle copy. The GSAP timeline reveals these lines
+  one at a time during the scroll.
+
+src/components/TypewriterCycle.tsx
+  Small client helper used by Scene 1 to alternate the title between
+  HIRAISHIN NO JUTSU and 飛雷神の術.
 
 src/components/landing.css
   Main visual system. Defines the sticky stage, image layers, fog planes,
-  archive layer, company/rain layer, overlays, and responsive sizing.
+  intro gate, Scene 1 and Scene 2 overlays, archive layer, company/rain
+  layer, and responsive sizing.
 
 src/components/ScrollExperience.tsx
 src/components/CloudLayer.tsx
@@ -39,7 +60,7 @@ src/components/CloudLayer.tsx
   the current home page.
 
 public/images
-  Forest, company, project/archive, and fog image assets.
+  Forest, company, archive, painting, logo, and fog image assets.
 
 public/videos
   Rain video overlays used in the final scene.
@@ -51,9 +72,13 @@ The active route is `/`.
 
 `page.tsx` renders `LandingExperience`, which is marked with `"use client"` because it depends on browser APIs, refs, `useEffect`, GSAP, video playback, and Lenis.
 
-Inside `LandingExperience`, the important layers are:
+The route first mounts `IntroGate`. While the gate is active, scroll input is prevented and the document is kept at the top. When the counter reaches 100, the gate dissolves through the mist-bridge transition and calls back into `LandingExperience` so `ScrollTrigger` can refresh from a clean scroll position.
+
+Inside the sticky stage, the important layers are:
 
 - `.forest-world`: the tall opening forest image plus four drifting fog planes.
+- `.landing-title`: Scene 1 title overlay rendered by `SceneOneOverlay`.
+- `.scene-two-layer`: Scene 2 transfer principles rendered by `SceneTwoPrinciples`.
 - `.archive-transition-bg`: the full-screen archive transition texture.
 - `.archive-scroll-image`: the illustrated archive image that appears mid-sequence.
 - `.company-world`: the final image layer, with rain videos blended over it.
@@ -76,7 +101,16 @@ The scroll area is intentionally much taller than the viewport:
 - Desktop: `.landing-scroll` is `760vh`.
 - Mobile: `.landing-scroll` is reduced to `245vh`.
 
-The sticky `.landing-stage` remains in view while the timeline moves and fades the internal layers.
+The sticky `.landing-stage` remains in view while the timeline moves and fades the internal layers. Scene 2 extends the early timeline so the transfer-principle lines can appear without overlapping the later archive, painting, and rain sequence.
+
+## Story Flow
+
+1. Black intro gate with the quote `時を待つな。時を結べ。`.
+2. Mist dissolve into the forest landing view.
+3. Scene 1 title: `HIRAISHIN NO JUTSU` / `飛雷神の術`.
+4. Headline: `Teleport files between browsers.`
+5. Scene 2 principles describe the transfer model: files stay in the browser, the share link is temporary, the server stores the route rather than the file, WebRTC carries chunks peer-to-peer, and the receiver rebuilds/verifies the transfer.
+6. The scroll continues into the archive/architecture painting and rainy final scene.
 
 ## Commands
 
